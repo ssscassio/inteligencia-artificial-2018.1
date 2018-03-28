@@ -8,3 +8,9 @@ Trabalhos desenvolvidos durante a disciplina [Inteligência Artificial Não Simb
 - Discentes:
     - Cássio Silva de Sá Santos
     - Pedro Olympio Serra Neri
+
+## Projetos
+
+### [Problema 1](./primeiro_problema)
+- O propósito desse projeto é cobrir os conceitos que envolvem Redes Neurais Artificiais em especial os da classe MPL (MultiLayer Perceptron)
+
