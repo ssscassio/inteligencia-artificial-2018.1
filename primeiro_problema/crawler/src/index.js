@@ -3,11 +3,14 @@ var fs = require("fs");
 
 var ids = [];
 var reviews = [];
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-function populateIdsVector() {
+async function populateIdsVector() {
     Object.keys(gplay.category).forEach(element => {
         const category = gplay.category[element];
-        delay(2000);
+        await delay(2000);
         gplay.list({
             category,
             collection: gplay.collection.TOP_PAID, // TOP_PAID ou TOP_FREE
@@ -23,9 +26,9 @@ function populateIdsVector() {
     });
 }
 
-function getIdsInfo() {
+async function getIdsInfo() {
     ids.forEach(element => {
-        delay(5000);
+        await delay(5000);
         gplay.reviews({
             appId: element,
             page: 0,
