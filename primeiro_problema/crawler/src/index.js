@@ -10,7 +10,7 @@ function populateIdsVector() {
         delay(2000);
         gplay.list({
             category,
-            collection: gplay.collection.TOP_FREE,
+            collection: gplay.collection.TOP_PAID, // TOP_PAID ou TOP_FREE
             num: 2
         }).then((apps) => {
             apps.forEach(app => {
@@ -59,5 +59,5 @@ function getIdsInfo() {
 }
 
 function saveOnFile() {
-    fs.writeFile("./output/reviews.json", JSON.stringify(reviews, null, 4));
+    fs.writeFile("./output/reviews-paid.json", JSON.stringify(reviews, null, 4));
 }
