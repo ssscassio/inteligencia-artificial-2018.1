@@ -1,16 +1,13 @@
 var gplay = require('google-play-scraper');
 var fs = require("fs");
+var sleep = require('sleep');
 
 var ids = [];
 var reviews = [];
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
-async function populateIdsVector() {
+function populateIdsVector() {
     Object.keys(gplay.category).forEach(element => {
         const category = gplay.category[element];
-        await delay(2000);
         gplay.list({
             category,
             collection: gplay.collection.TOP_PAID, // TOP_PAID ou TOP_FREE
@@ -18,19 +15,19 @@ async function populateIdsVector() {
         }).then((apps) => {
             apps.forEach(app => {
                 ids.push(app.appId);
-                if (ids.lenght == 116) {
-                    getIdsInfo();
+                if (ids.lenght == 114) {
+                    getIdsInfo(ids);
                 }
             })
         });
     });
 }
 
-async function getIdsInfo() {
-    ids.forEach(element => {
-        await delay(5000);
+function getIdsInfo(idsArray) {
+    idsArray.forEach(appId => {
+        sleep.msleep(5000);
         gplay.reviews({
-            appId: element,
+            appId,
             page: 0,
             sort: gplay.sort.RATING,
             lang: 'pt-br'
@@ -44,7 +41,7 @@ async function getIdsInfo() {
                         score: review.score,
                         text: review.text
                     });
-                    saveOnFile();
+                    saveOnFile(reviews);
                     return true;
                 } else if (review.score <= 3 && negative < 5) {
                     negative += 1;
@@ -52,7 +49,7 @@ async function getIdsInfo() {
                         score: review.score,
                         text: review.text
                     });
-                    saveOnFile();
+                    saveOnFile(reviews);
                     return true;
                 }
                 return false;
@@ -61,8 +58,13 @@ async function getIdsInfo() {
     });
 }
 
-function saveOnFile() {
-    fs.writeFile("./output/reviews-paid.json", JSON.stringify(reviews, null, 4));
+function saveOnFile(file) {
+    console.log('Saved on File');
+    fs.writeFile("./reviews-paid.json", JSON.stringify(file, null, 4), (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
 }
 
 populateIdsVector();

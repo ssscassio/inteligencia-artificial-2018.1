@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "fs": "0.0.1-security",
-    "google-play-scraper": "^5.0.0"
+    "google-play-scraper": "^5.0.0",
+    "sleep": "^5.1.1"
   }
 }
