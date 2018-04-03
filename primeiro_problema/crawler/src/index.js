@@ -61,3 +61,5 @@ function getIdsInfo() {
 function saveOnFile() {
     fs.writeFile("./output/reviews-paid.json", JSON.stringify(reviews, null, 4));
 }
+
+populateIdsVector();
