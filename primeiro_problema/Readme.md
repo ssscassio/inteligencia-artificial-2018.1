@@ -29,4 +29,14 @@ Dentre as opções para armazenar os dados coletados no site escolhido, ficamos 
 - [NodeJs](https://nodejs.org/en/)
 - [Google-Play-Scraper](https://github.com/facundoolano/google-play-scraper)
 
+### Tempo de execução do crawler
 
+**FREE:**
+real	4m2.691s
+user	0m7.387s
+sys	0m0.637s
+
+**PAID:**
+real	3m26.569s
+user	0m5.946s
+sys	0m0.608s

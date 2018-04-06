@@ -1,6 +1,8 @@
 var gplay = require('google-play-scraper');
 var fs = require("fs");
 var sleep = require('sleep');
+var idsImportPaid = require("../AppIdsPaid.json");
+var idsImportFree = require("../AppIdsFree.json");
 
 var ids = [];
 var reviews = [];
@@ -10,61 +12,59 @@ function populateIdsVector() {
         const category = gplay.category[element];
         gplay.list({
             category,
-            collection: gplay.collection.TOP_PAID, // TOP_PAID ou TOP_FREE
+            collection: gplay.collection.TOP_FREE, // TOP_PAID ou TOP_FREE
             num: 2
         }).then((apps) => {
             apps.forEach(app => {
                 ids.push(app.appId);
-                if (ids.lenght == 114) {
-                    getIdsInfo(ids);
-                }
+                // if (ids.length == 114) {
+                saveOnFile(ids)
+                // getIdsInfo(ids);
+                // }
             })
         });
     });
 }
 
 function getIdsInfo(idsArray) {
+    console.log("Teste");
+    var reviews = [];
     idsArray.forEach(appId => {
-        sleep.msleep(5000);
+        console.log("App id atual = ", appId);
+        sleep.msleep(2000);
         gplay.reviews({
-            appId,
+            appId: appId,
             page: 0,
             sort: gplay.sort.RATING,
             lang: 'pt-br'
-        }).then((result) => {
-            let positive = 0;
-            let negative = 0;
-            result.every(review => {
-                if (review.score >= 4 && positive < 5) {
-                    positive += 1;
-                    reviews.push({
-                        score: review.score,
-                        text: review.text
-                    });
-                    saveOnFile(reviews);
-                    return true;
-                } else if (review.score <= 3 && negative < 5) {
-                    negative += 1;
-                    reviews.push({
-                        score: review.score,
-                        text: review.text
-                    });
-                    saveOnFile(reviews);
-                    return true;
-                }
-                return false;
-            })
+        }).then(result => {
+            reviews.push(result);
+            saveOnFile(reviews);
         });
     });
 }
 
+
+// function getIdsInfo(idsArray) {
+//     console.log("Gets id info");
+//     var obj = {
+//         appId: element,
+//         page: 0,
+//         sort: gplay.sort.RATING,
+//         lang: 'pt-br'
+//     };
+//     gplay.reviews(obj).then(console.log, console.log);
+
+// }
+
 function saveOnFile(file) {
     console.log('Saved on File');
-    fs.writeFile("./reviews-paid.json", JSON.stringify(file, null, 4), (err) => {
+    fs.writeFile("./reviews-free.json", JSON.stringify(file, null, 4), (err) => {
         if (err) {
             console.log(err);
         }
     });
 }
 
-populateIdsVector();
+getIdsInfo(idsImportFree);
+// populateIdsVector();
