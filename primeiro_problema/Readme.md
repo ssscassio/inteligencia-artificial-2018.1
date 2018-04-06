@@ -4,7 +4,7 @@
 
 **Classificação de comentários como positivos ou negativos**
 
-A proposta do projeto é escolher comentários em algum site que tenha comentários com avaliação e treinar um modelo para ser capaz de, dado um novo comentário não rotulado classificar o comentário como posito ou negativo
+A proposta do projeto é escolher comentários em algum site que tenha comentários com avaliação e treinar um modelo para ser capaz de, dado um novo comentário não rotulado classificar o comentário como positivo ou negativo
 
 # Dados
 A primeira etapa do projeto era decidir qual seria o site que iriamos utilizar para capturar as informações de comentários e avaliação dos usuários para cada comentário
@@ -17,8 +17,7 @@ A primeira etapa do projeto era decidir qual seria o site que iriamos utilizar p
 - [Steam](http://store.steampowered.com/)
 	Avaliação de jogos: Comentários e Avaliação(Recomendado/Não recomendado)
   
-Para criar o nosso dataset de comentários e pontuação foi pensado inicialmente fazer um crawler percorrendo os 
-sites e armazendo as informações em um banco em que tivessemos controle
+Para criar o nosso *Dataset* de comentários e pontuação foi pensado inicialmente fazer um crawler percorrendo os sites e armazenando as informações em um banco que tivéssemos controle
 
 ## Armazenar informações
 Dentre as opções para armazenar os dados coletados no site escolhido, ficamos entre:
