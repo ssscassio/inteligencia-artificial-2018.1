@@ -49,3 +49,23 @@ sys	0m0.637s
 real	3m26.569s
 user	0m5.946s
 sys	0m0.608s
+
+## Pré processamento
+
+```
+############################
+END OF PREPROCESSOR
+STATS:
+Base positive:  6120
+Base negative:  225
+Base length:  6345
+Super length:  12195
+Sub length:  450
+############################
+```
+
+### Tempo de execução do pré processador
+
+real	0m0.212s
+user	0m0.171s
+sys	0m0.039s
