@@ -95,7 +95,7 @@ STATS:
 Base positive:  6120
 Base negative:  225
 Base length:  6345
-Super length:  12195
+Sob length:  12195
 Sub length:  450
 ############################
 ```
@@ -106,7 +106,6 @@ Sub length:  450
 	"text": "Excelente Intuitivo e fácil de configurar",
 	"qualification": 1
 }
-
 ```
 ### Tempo de execução (Pré-Processador)
 ```

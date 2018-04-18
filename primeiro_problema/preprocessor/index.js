@@ -7,7 +7,7 @@ var filteredNegative = [];
 
 var baseSample = [];
 var subSample = [];
-var superSample = [];
+var sobSample = [];
 
 function getScoreQualification(reviewRaw) {
     const { text, score } = reviewRaw;
@@ -54,7 +54,7 @@ function shuffle(arr) {
     })
 }
 
-function generateSuper(positives, negatives) {
+function generateSob(positives, negatives) {
     var ratio = 0;
     var bigger = [];
     var smaller = [];
@@ -110,13 +110,12 @@ baseSample = filteredPositive.concat(filteredNegative);
 baseSample = shuffle(baseSample);
 console.log("Base length: ", baseSample.length);
 saveOnFile(baseSample, "results/base-sample.json");
-superSample = generateSuper(filteredPositive, filteredNegative);
-superSample = shuffle(superSample);
-console.log("Super length: ", superSample.length);
-saveOnFile(superSample, "results/super-sample.json");
+sobSample = generateSob(filteredPositive, filteredNegative);
+sobSample = shuffle(sobSample);
+console.log("Sob length: ", sobSample.length);
+saveOnFile(sobSample, "results/sob-sample.json");
 subSample = generateSub(filteredPositive, filteredNegative);
 subSample = shuffle(subSample);
-
 saveOnFile(subSample, "results/sub-sample.json");
 console.log("Sub length: ", subSample.length);
 console.log("############################");
