@@ -38,20 +38,56 @@ Resolvemos então utilizar uma api de terceiro ([google-play-scraper](https://gi
 Para ter um *Dataset* que contemplasse os diferentes tipos de usuários buscamos dois aplicativos de cada uma das 57 categorias existentes na GooglePlay tanto da lista dos mais baixados pagos, quanto dos mais baixados gratuitos. Resultado em um total de 228 aplicativos.
 
 
-### Tempo de execução do crawler
+Existe um problema no Dataset nesse ponto pois ele contém informações não relevantes para o propósito do trabalho e pelo fato de ter um conjunto de classes com população desbalanceada o que pode prejudicar no treinamento do modelo por conta de um possível enviesamento por parte do grupo dominante e da falta de representatividade do grupo minoritário.
+
+### Exemplo de Dado (Crawler)
+```
+{
+	"id": "gp:AOqpTOHSkmGFE_awFeeZXD5OC5CFWCQlVJqCMFwbOri1ZQHaegI58h9vsvLYVmu1Cth5YHhm2UfY3VZsfUqT8w",
+	"userName": "Gabriela Cunha Alves",
+	"userImage": "https://lh3.googleusercontent.com/-JS5R9YV_OJo/AAAAAAAAAAI/AAAAAAAAAAA/ACLGyWCS0TCRI5hzCa2TScenJ7wxSmHtVw/w96-h96-p/photo.jpg",
+	"date": "8 de junho de 2016",
+	"url": "https://play.google.com/store/apps/details?id=com.mcdonalds.app&reviewId=Z3A6QU9xcFRPSFNrbUdGRV9hd0ZlZVpYRDVPQzVDRldDUWxWSnFDTUZ3Yk9yaTFaUUhhZWdJNThoOXZzdkxZVm11MUN0aDVZSGhtMlVmWTNWWnNmVXFUOHc",
+	"score": 1,
+	"title": "Não gostei",
+	"text": "Não gostei Pois me registrei e não encontrou nelhum restaurante. Sou de Mogi das cruzes. As vezes sou eu quem não soube mecher,mas deveria também ter a versão português. Se tiverem uma resposta. Me ajudem pfv. Ai eu torno a baixar ✌"
+}
+```
+### Tempo de execução (Crawler)
 
 **FREE:**
+```
 real	4m2.691s
 user	0m7.387s
 sys	0m0.637s
-
+```
 **PAID:**
+```
 real	3m26.569s
 user	0m5.946s
 sys	0m0.608s
+```
 
 ## Pré processamento
 
+O pré processamento tem como função:
+- Remover informações indesejáveis do *Dataset* (ex.: userName, userImage, date, url,...)
+- Gerar *Dataset* com **reviews** escolhidos de forma aleatória
+- Gerar diferentes conjuntos de dados de treinamento 
+	- Base de dados padrão desbalanceada
+	- Base de dados sobreamostrada
+	- Base de dados subamostrada
+- Aplicar limiar na avaliação por estrelas (1 a 3 = negativo; 4 e 5 = positivo)
+- Randomizar os reviews no *Dataset*
+
+
+Uma das soluções para o problema de desbalanceamento de dados de treinamento é a abordagem de pré-processamento de dados, onde o objetivo é balancear o conjunto de treinamento através de mecanismos de reamostragem de dados no espaço de entrada, que incluem sobreamostragem da classe minoritária, subamostragem da classe majoritária ou a combinação de ambas as técnicas.
+
+A sobreamostragem é baseada na replicação de exemplos preexistentes ou na geração de dados sintéticos. Neste caso, replicamos a classe minoritária *(reviews negativos)* até o tamanho de sua população se igualar a dos reviews positivos *(classe majoritária)*.
+
+A subamostragem envolve a eliminação de exemplos da classe majoritária. Os exemplos a serem eliminados podem ser escolhidos aleatoriamente *(subamostragem aleatória)* ou a partir de alguma informação a priori *(subamostragem informativa)*. Neste projeto, foi adotada a remoção de elementos da classe majoritária *(reviews positivos)* de forma aleatória até o tamanho da sua população se igualar a dos reviews negativos *(classe minoritária)*
+
+### Resultado da execução (Pré-Processador)
 ```
 ############################
 END OF PREPROCESSOR
@@ -64,8 +100,17 @@ Sub length:  450
 ############################
 ```
 
-### Tempo de execução do pré processador
+### Exemplo de Dado (Pré-Processador)
+```
+{
+	"text": "Excelente Intuitivo e fácil de configurar",
+	"qualification": 1
+}
 
+```
+### Tempo de execução (Pré-Processador)
+```
 real	0m0.212s
 user	0m0.171s
 sys	0m0.039s
+```
