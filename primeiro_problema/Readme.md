@@ -24,19 +24,18 @@ Dentre as opções para armazenar os dados coletados no site escolhido, pensamos
 - [SQLite:](https://www.sqlite.org/index.html) (Por ser leve e gerar um arquivo .db)
 - [Firebase:](www.firebase.com/) (Por não depender da infraestrutura de SGBD local)
 
-Porém o formato escolhido para armazenar os dados colhidos foi um arquivo *.json* dentro da pasta do projeto. Pois sua leitura e escrita é facilitada pelo node e python que foram as ferramentas escolhidas para o desenvolvimento do projeto.
+Porém o formato escolhido para armazenar os dados colhidos foi um arquivo *.json* dentro da pasta do projeto, pois sua leitura e escrita é facilitada pelo node e python que foram as ferramentas escolhidas para o desenvolvimento deste trabalho.
 
 ## Tecnologia para realizar a mineração
 - [NodeJs](https://nodejs.org/en/)
 - [google-play-scraper](https://github.com/facundoolano/google-play-scraper)
 
-Inicialmente tentamos crawlear o html das páginas da [GooglePlay](https://play.google.com/store) porém, por complicações de oriundas da maneira que a página foi implementada e pelo bloqueio no endereço */store/getreviews* no arquivo [robots.txt](https://play.google.com/robots.txt), sua implementação foi mais dificultada. 
+Inicialmente tentamos *crawlear* o html das páginas da [GooglePlay](https://play.google.com/store) porém, por complicações oriundas da maneira que a página foi implementada e pelo bloqueio no endereço */store/getreviews* no arquivo [robots.txt](https://play.google.com/robots.txt), sua implementação foi mais dificultada. 
 
-Resolvemos então utilizar uma api de terceiro ([google-play-scraper](https://github.com/facundoolano/google-play-scraper)) que usava os requests iguais aos feitos pelo navegador de um usuário comum.
+Resolvemos então utilizar uma api de terceiro ([google-play-scraper](https://github.com/facundoolano/google-play-scraper)) que usava os *requests* iguais aos feitos pelo navegador de um usuário comum.
 
 ## Variabilidade dos dados
-Para ter um *Dataset* que contemplasse os diferentes tipos de usuários buscamos dois aplicativos de cada uma das 57 categorias existentes na GooglePlay tanto da lista dos mais baixados pagos, quanto dos mais baixados gratuitos. Resultado em um total de 228 aplicativos.
-
+Para ter um *Dataset* que contemplasse os diferentes tipos de usuários buscamos dois aplicativos de cada uma das 57 categorias existentes na GooglePlay tanto da lista dos mais baixados pagos, quanto dos mais baixados gratuitos. Resultado em um total de 228 aplicativos. Para cada um destes aplicativos foram pegos os reviews presentes na primeira página de requisição. Poderiam ser retornados no máximo 50 reviews por aplicativo porém sem critério quanto a avaliação do usuário. 
 
 Existe um problema no Dataset nesse ponto pois ele contém informações não relevantes para o propósito do trabalho e pelo fato de ter um conjunto de classes com população desbalanceada o que pode prejudicar no treinamento do modelo por conta de um possível enviesamento por parte do grupo dominante e da falta de representatividade do grupo minoritário.
 
@@ -53,20 +52,17 @@ Existe um problema no Dataset nesse ponto pois ele contém informações não re
 	"text": "Não gostei Pois me registrei e não encontrou nelhum restaurante. Sou de Mogi das cruzes. As vezes sou eu quem não soube mecher,mas deveria também ter a versão português. Se tiverem uma resposta. Me ajudem pfv. Ai eu torno a baixar ✌"
 }
 ```
+
 ### Tempo de execução (Crawler)
 
 **FREE:**
-```
-real	4m2.691s
-user	0m7.387s
-sys	0m0.637s
-```
+|real|user|sys|
+|----|----|---|
+|4m2.691s|0m7.387s|0m0.637s|
 **PAID:**
-```
-real	3m26.569s
-user	0m5.946s
-sys	0m0.608s
-```
+|real|user|sys|
+|----|----|---|
+|3m26.569s|0m5.946s|0m0.608s|
 
 ## Pré processamento
 
@@ -79,7 +75,6 @@ O pré processamento tem como função:
 	- Base de dados subamostrada
 - Aplicar limiar na avaliação por estrelas (1 a 3 = negativo; 4 e 5 = positivo)
 - Randomizar os reviews no *Dataset*
-
 
 Uma das soluções para o problema de desbalanceamento de dados de treinamento é a abordagem de pré-processamento de dados, onde o objetivo é balancear o conjunto de treinamento através de mecanismos de reamostragem de dados no espaço de entrada, que incluem sobreamostragem da classe minoritária, subamostragem da classe majoritária ou a combinação de ambas as técnicas.
 
@@ -108,8 +103,6 @@ Sub length:  450
 }
 ```
 ### Tempo de execução (Pré-Processador)
-```
-real	0m0.212s
-user	0m0.171s
-sys	0m0.039s
-```
+|real|user|sys|
+|----|----|---|
+|0m0.212s|0m0.171s|0m0.039s|
