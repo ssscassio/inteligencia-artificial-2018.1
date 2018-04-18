@@ -111,9 +111,12 @@ baseSample = shuffle(baseSample);
 console.log("Base length: ", baseSample.length);
 saveOnFile(baseSample, "results/base-sample.json");
 superSample = generateSuper(filteredPositive, filteredNegative);
+superSample = shuffle(superSample);
 console.log("Super length: ", superSample.length);
 saveOnFile(superSample, "results/super-sample.json");
 subSample = generateSub(filteredPositive, filteredNegative);
+subSample = shuffle(subSample);
+
 saveOnFile(subSample, "results/sub-sample.json");
 console.log("Sub length: ", subSample.length);
 console.log("############################");
