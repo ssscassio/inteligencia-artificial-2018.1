@@ -56,10 +56,13 @@ Existe um problema no Dataset nesse ponto pois ele contém informações não re
 ### Tempo de execução (Crawler)
 
 **FREE:**
+
 |real|user|sys|
 |----|----|---|
 |4m2.691s|0m7.387s|0m0.637s|
+
 **PAID:**
+
 |real|user|sys|
 |----|----|---|
 |3m26.569s|0m5.946s|0m0.608s|
