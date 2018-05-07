@@ -106,16 +106,28 @@ console.log("END OF PREPROCESSOR");
 console.log("STATS:");
 console.log("Base positive: ", filteredPositive.length);
 console.log("Base negative: ", filteredNegative.length);
+
+// Base
 baseSample = filteredPositive.concat(filteredNegative);
 baseSample = shuffle(baseSample);
 console.log("Base length: ", baseSample.length);
+testBaseSample = baseSample.splice(0, Math.round(0.1 * baseSample.length))
+saveOnFile(testBaseSample, "test/test-base-sample.json");
 saveOnFile(baseSample, "results/base-sample.json");
+
+// Sob
 sobSample = generateSob(filteredPositive, filteredNegative);
 sobSample = shuffle(sobSample);
 console.log("Sob length: ", sobSample.length);
+testSobSample = sobSample.splice(0, Math.round(0.1 * sobSample.length));
+saveOnFile(testSobSample, "test/test-sob-sample.json");
 saveOnFile(sobSample, "results/sob-sample.json");
+
+// Sub
 subSample = generateSub(filteredPositive, filteredNegative);
 subSample = shuffle(subSample);
-saveOnFile(subSample, "results/sub-sample.json");
 console.log("Sub length: ", subSample.length);
+testSubSample = subSample.splice(0, Math.round(0.1 * subSample.length));
+saveOnFile(testSubSample, "test/test-sub-sample.json");
+saveOnFile(subSample, "results/sub-sample.json");
 console.log("############################");
