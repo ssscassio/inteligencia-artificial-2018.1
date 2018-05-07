@@ -39,8 +39,8 @@ def load_data(label_name='qualification'):
     vocab_size = len(words)
 
     for i, word in enumerate(words):
-        word2int[word] = i
-        int2word[i] = word
+        word2int[word] = int(i)
+        int2word[i] = str(word)
 
     bag_of_words_train = {}
     bag_of_words_test = {}
@@ -61,7 +61,7 @@ def load_data(label_name='qualification'):
         for word in corpus_raw.split():
             if word != '.':
                 index = word2int[word]
-                bag_of_words_train[index][i] += 1
+                bag_of_words_test[index][i] += 1
 
     # Remove palavras com menos que um limiar de ocorrências em diferentes documentos
     bag_of_words_train_copy = {}
@@ -73,8 +73,8 @@ def load_data(label_name='qualification'):
             if(occurrence != 0):
                 sum += 1
         if(sum > 2):
-            bag_of_words_train_copy[word_as_int] = bag_of_words_train[word_as_int]
-            bag_of_words_test_copy[word_as_int] = bag_of_words_test[word_as_int]
+            bag_of_words_train_copy[str(word_as_int)] = bag_of_words_train[word_as_int]
+            bag_of_words_test_copy[str(word_as_int)] = bag_of_words_test[word_as_int]
 
     train_x = pd.DataFrame(data=bag_of_words_train_copy)
     test_x = pd.DataFrame(data=bag_of_words_test_copy)
@@ -83,13 +83,13 @@ def load_data(label_name='qualification'):
 
 
 def train_input_fn(features, labels, batch_size):
-
+    
     # Convert the inputs to a Dataset.
     dataset = tf.data.Dataset.from_tensor_slices((dict(features), labels))
-
+    
     # Shuffle, repeat, and batch the examples.
     dataset = dataset.shuffle(1000).repeat().batch(batch_size)
-
+    
     # Return the dataset.
     return dataset
 

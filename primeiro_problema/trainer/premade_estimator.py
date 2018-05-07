@@ -23,26 +23,24 @@ def main(argv):
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # One hidden layer of 100 nodes
-        hidden_units=[4],
+        hidden_units=[10, 10],
         # The momdel must choose between 2 classes
-        n_classes=2
-    )
+        n_classes=2)
 
     # Train the Model.
     classifier.train(
-        input_fn=lambda: comments_data.train_input_fn(train_x, train_y,
+        input_fn=lambda:comments_data.train_input_fn(train_x, train_y,
                                                       args.batch_size),
-        steps=args.train_steps
-    )
+        steps=args.train_steps)
 
     # TODO: Evaluate the model  (Using tests data)
     eval_result = classifier.evaluate(
-        input_f=lambda: comment_data.eval_input_fn(test_x, test_y,
-                                                   args.batch_size)
-    )
+        input_fn=lambda:comments_data.eval_input_fn(test_x, test_y,
+                                                   args.batch_size))
 
     print('\nTest set accuracy: {accuracy:0.3f}\n'.format(**eval_result))
 
 
 if __name__ == '__main__':
+    tf.logging.set_verbosity(tf.logging.INFO)
     tf.app.run(main)
