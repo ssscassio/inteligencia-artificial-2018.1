@@ -3,7 +3,7 @@ cd ../trainer
 
 optimizers=("adagrad" "adam" "gradient")
 batch_sizes=(10 100 1000)
-train_steps=(1000 5000 10000)
+train_steps=(1000 5000)
 learning_rate=(0.1 0.01 0.001)
 
 for i in "${optimizers[@]}"
@@ -20,6 +20,3 @@ do
 
         done
 done
-
-echo "TESTANDO AQUI NO TROLL"
-echo $TEST
