@@ -11,6 +11,8 @@ parser.add_argument('--optimizer', default='adagrad',
                     type=str, help='optimizer name')
 parser.add_argument('--learning_rate', default=0.1,
                     type=float, help='learning rate')
+parser.add_argument('--hidden_layer', default=100, type=int, 
+                    help='number of neurons in hidden layer')
 
 OPTIMIZER = tf.train.ProximalAdagradOptimizer
 # Optimizers types:
@@ -48,7 +50,7 @@ def main(argv):
     classifier = tf.estimator.DNNClassifier(
         feature_columns=my_feature_columns,
         # One hidden layer of 100 nodes
-        hidden_units=[100],
+        hidden_units=[args.hidden_layer],
         # The momdel must choose between 2 classes
         n_classes=2,
         # Choose the Optimizer
