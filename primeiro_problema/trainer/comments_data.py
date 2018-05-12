@@ -73,28 +73,31 @@ def load_data(label_name='qualification'):
             if(occurrence != 0):
                 sum += 1
         if(sum > 2):
-            bag_of_words_train_copy[str(word_as_int)] = bag_of_words_train[word_as_int]
-            bag_of_words_test_copy[str(word_as_int)] = bag_of_words_test[word_as_int]
+            bag_of_words_train_copy[str(
+                word_as_int)] = bag_of_words_train[word_as_int]
+            bag_of_words_test_copy[str(word_as_int)
+                                   ] = bag_of_words_test[word_as_int]
 
     train_x = pd.DataFrame(data=bag_of_words_train_copy)
     test_x = pd.DataFrame(data=bag_of_words_test_copy)
 
-    return (train_x, train_y),(test_x, test_y)
+    return (train_x, train_y), (test_x, test_y)
 
 
 def train_input_fn(features, labels, batch_size):
-    
+
     # Convert the inputs to a Dataset.
     dataset = tf.data.Dataset.from_tensor_slices((dict(features), labels))
-    
+
     # Shuffle, repeat, and batch the examples.
-    dataset = dataset.shuffle(1000).repeat().batch(batch_size)
-    
+    dataset = dataset.batch(batch_size)
+
     # Return the dataset.
     return dataset
 
+
 def eval_input_fn(features, labels, batch_size):
-    features=dict(features)
+    features = dict(features)
     if labels is None:
         # No labels, use only features.
         inputs = features

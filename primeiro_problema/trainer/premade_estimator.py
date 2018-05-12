@@ -5,13 +5,13 @@ import comments_data
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--batch_size', default=100, type=int, help='batch size')
-parser.add_argument('--train_steps', default=1000, type=int,
+parser.add_argument('--train_steps', default=10, type=int,
                     help='number of training steps')
 parser.add_argument('--optimizer', default='adagrad',
                     type=str, help='optimizer name')
 parser.add_argument('--learning_rate', default=0.1,
                     type=float, help='learning rate')
-parser.add_argument('--hidden_layer', default=100, type=int, 
+parser.add_argument('--hidden_layer', default=100, type=int,
                     help='number of neurons in hidden layer')
 
 OPTIMIZER = tf.train.ProximalAdagradOptimizer
@@ -60,18 +60,20 @@ def main(argv):
     )
 
     # Train the Model.
-    classifier.train(
-        input_fn=lambda: comments_data.train_input_fn(train_x, train_y,
-                                                      args.batch_size),
-        steps=args.train_steps)
+    for i in range(args.train_steps):
+        classifier.train(
+            input_fn=lambda: comments_data.train_input_fn(train_x, train_y,
+                                                          len(train_x)))
 
-    # TODO: Evaluate the model  (Using tests data)
-    eval_result = classifier.evaluate(
-        input_fn=lambda: comments_data.eval_input_fn(test_x, test_y,
-                                                     args.batch_size))
+        print(classifier.get_variable_value(
+            classifier.get_variable_names()[0]))
 
-    print(args)
-    print(eval_result)
+        eval_result = classifier.evaluate(
+            input_fn=lambda: comments_data.eval_input_fn(test_x, test_y,
+                                                         len(test_x)))
+
+        print(args)
+        print(eval_result)
 
 
 if __name__ == '__main__':
