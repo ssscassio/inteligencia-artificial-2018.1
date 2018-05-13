@@ -1,0 +1,148 @@
+[  90.926025   36.893612   60.377182   81.211464  -22.218044 -114.750305
+  301.11215   -99.417816  145.79253  -179.96643 ]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 16803.725, 'label/mean': 0.5555556, 'loss': 756167.6, 'prediction/mean': 0.0, 'global_step': 1}
+[-391931.38   -124398.2     -94399.33   -340093.84      1555.9191
+  -38771.152    13637.536  -178457.52    -61966.137    35275.31  ]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 50386813000.0, 'label/mean': 0.5555556, 'loss': 2267406700000.0, 'prediction/mean': 1.0, 'global_step': 2}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 103.07319, 'label/mean': 0.5555556, 'loss': 4638.2935, 'prediction/mean': 0.0, 'global_step': 3}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2584.208, 'label/mean': 0.5555556, 'loss': 116289.36, 'prediction/mean': 1.0, 'global_step': 4}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 186.40651, 'label/mean': 0.5555556, 'loss': 8388.293, 'prediction/mean': 0.0, 'global_step': 5}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2517.5413, 'label/mean': 0.5555556, 'loss': 113289.36, 'prediction/mean': 1.0, 'global_step': 6}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 269.73984, 'label/mean': 0.5555556, 'loss': 12138.293, 'prediction/mean': 0.0, 'global_step': 7}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2450.8748, 'label/mean': 0.5555556, 'loss': 110289.36, 'prediction/mean': 1.0, 'global_step': 8}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 353.07318, 'label/mean': 0.5555556, 'loss': 15888.293, 'prediction/mean': 0.0, 'global_step': 9}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2384.208, 'label/mean': 0.5555556, 'loss': 107289.36, 'prediction/mean': 1.0, 'global_step': 10}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 436.40656, 'label/mean': 0.5555556, 'loss': 19638.295, 'prediction/mean': 0.0, 'global_step': 11}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2317.5413, 'label/mean': 0.5555556, 'loss': 104289.36, 'prediction/mean': 1.0, 'global_step': 12}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 519.73987, 'label/mean': 0.5555556, 'loss': 23388.295, 'prediction/mean': 0.0, 'global_step': 13}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2250.8748, 'label/mean': 0.5555556, 'loss': 101289.36, 'prediction/mean': 1.0, 'global_step': 14}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 603.07324, 'label/mean': 0.5555556, 'loss': 27138.295, 'prediction/mean': 0.0, 'global_step': 15}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2184.208, 'label/mean': 0.5555556, 'loss': 98289.36, 'prediction/mean': 1.0, 'global_step': 16}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 686.40656, 'label/mean': 0.5555556, 'loss': 30888.295, 'prediction/mean': 0.0, 'global_step': 17}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2117.5413, 'label/mean': 0.5555556, 'loss': 95289.36, 'prediction/mean': 1.0, 'global_step': 18}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 769.73987, 'label/mean': 0.5555556, 'loss': 34638.293, 'prediction/mean': 0.0, 'global_step': 19}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 2050.8748, 'label/mean': 0.5555556, 'loss': 92289.36, 'prediction/mean': 1.0, 'global_step': 20}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 853.0732, 'label/mean': 0.5555556, 'loss': 38388.293, 'prediction/mean': 0.0, 'global_step': 21}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1984.208, 'label/mean': 0.5555556, 'loss': 89289.36, 'prediction/mean': 1.0, 'global_step': 22}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 936.40643, 'label/mean': 0.5555556, 'loss': 42138.29, 'prediction/mean': 0.0, 'global_step': 23}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1917.5413, 'label/mean': 0.5555556, 'loss': 86289.36, 'prediction/mean': 1.0, 'global_step': 24}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1019.73975, 'label/mean': 0.5555556, 'loss': 45888.29, 'prediction/mean': 0.0, 'global_step': 25}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1850.8746, 'label/mean': 0.5555556, 'loss': 83289.36, 'prediction/mean': 1.0, 'global_step': 26}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1103.0731, 'label/mean': 0.5555556, 'loss': 49638.29, 'prediction/mean': 0.0, 'global_step': 27}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1784.208, 'label/mean': 0.5555556, 'loss': 80289.36, 'prediction/mean': 1.0, 'global_step': 28}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.44444445, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1186.4064, 'label/mean': 0.5555556, 'loss': 53388.29, 'prediction/mean': 0.0, 'global_step': 29}
+[-3.9193138e+05 -1.2439820e+05 -9.4399328e+04 -3.4009384e+05
+ -3.0833059e+08 -3.8771152e+04 -2.0563376e+10 -1.7845752e+05
+ -6.1966137e+04 -1.3249283e+09]
+Namespace(hidden_layer=10, learning_rate=30.0, optimizer='gradient', train_steps=30)
+{'accuracy': 0.5555556, 'accuracy_baseline': 0.5555556, 'auc': 0.49999994, 'auc_precision_recall': 0.77777773, 'average_loss': 1717.5413, 'label/mean': 0.5555556, 'loss': 77289.36, 'prediction/mean': 1.0, 'global_step': 30}
