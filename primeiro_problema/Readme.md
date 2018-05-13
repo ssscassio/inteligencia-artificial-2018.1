@@ -30,7 +30,7 @@ Porém o formato escolhido para armazenar os dados colhidos foi um arquivo *.jso
 - [NodeJs](https://nodejs.org/en/)
 - [google-play-scraper](https://github.com/facundoolano/google-play-scraper)
 
-Inicialmente tentamos *crawlear* o html das páginas da [GooglePlay](https://play.google.com/store) porém, por complicações oriundas da maneira que a página foi implementada e pelo bloqueio no endereço */store/getreviews* no arquivo [robots.txt](https://play.google.com/robots.txt), sua implementação foi mais dificultada. 
+Inicialmente tentamos fazer um script para extrair as informações do html das páginas da [GooglePlay](https://play.google.com/store) porém, por complicações oriundas da maneira que a página foi implementada e pelo bloqueio no endereço */store/getreviews* no arquivo [robots.txt](https://play.google.com/robots.txt), sua implementação foi mais dificultada. 
 
 Resolvemos então utilizar uma api de terceiro ([google-play-scraper](https://github.com/facundoolano/google-play-scraper)) que usava os *requests* iguais aos feitos pelo navegador de um usuário comum.
 
@@ -109,3 +109,9 @@ Sub length:  450
 |real|user|sys|
 |----|----|---|
 |0m0.212s|0m0.171s|0m0.039s|
+
+##Criação da rede neural MLP
+
+Para a criação da rede neural foi escolhida a linguagem de programação [Python](https://www.python.org/) na sua versão 3.
+
+Como ferramenta escolhida para a criação da rede neural utilizou-se do [Google Tensor Flow](https://www.tensorflow.org/) devido a sua extensa documentação, comunidade grande e ativa, código open source e reputação positiva construída a partir dos excelentes resultados que foram divulgados pelo Google. Já para criar as estruturas de dados necessárias para inserção dos dados na rede criada pelo tensor flow utilizou-se da biblioteca open source [Python Data Analysis Library](http://pandas.pydata.org/).
