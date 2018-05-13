@@ -57,15 +57,15 @@ Existe um problema no Dataset nesse ponto pois ele contém informações não re
 
 **FREE:**
 
-|real|user|sys|
-|----|----|---|
-|4m2.691s|0m7.387s|0m0.637s|
+| real     | user     | sys      |
+| -------- | -------- | -------- |
+| 4m2.691s | 0m7.387s | 0m0.637s |
 
 **PAID:**
 
-|real|user|sys|
-|----|----|---|
-|3m26.569s|0m5.946s|0m0.608s|
+| real      | user     | sys      |
+| --------- | -------- | -------- |
+| 3m26.569s | 0m5.946s | 0m0.608s |
 
 ## Pré processamento
 
@@ -106,12 +106,58 @@ Sub length:  450
 }
 ```
 ### Tempo de execução (Pré-Processador)
-|real|user|sys|
-|----|----|---|
-|0m0.212s|0m0.171s|0m0.039s|
+| real     | user     | sys      |
+| -------- | -------- | -------- |
+| 0m0.212s | 0m0.171s | 0m0.039s |
 
-##Criação da rede neural MLP
+## Criação da rede neural MLP
 
 Para a criação da rede neural foi escolhida a linguagem de programação [Python](https://www.python.org/) na sua versão 3.
 
 Como ferramenta escolhida para a criação da rede neural utilizou-se do [Google Tensor Flow](https://www.tensorflow.org/) devido a sua extensa documentação, comunidade grande e ativa, código open source e reputação positiva construída a partir dos excelentes resultados que foram divulgados pelo Google. Já para criar as estruturas de dados necessárias para inserção dos dados na rede criada pelo tensor flow utilizou-se da biblioteca open source [Python Data Analysis Library](http://pandas.pydata.org/).
+
+![Blocos de execução do desenvolvimento do problema](https://i.imgur.com/vPxeRDJ.png)
+
+Figura 1. Blocos de execução do desenvolvimento do problema
+
+Uma vez que os dados já estavam minerados e disponíveis para uso, iniciou-se a etapa de conversão dos dados textuais em dados numéricos, já que redes neurais não são capazes de trabalhar com letras e palavras. O algoritmo escolhido para executar esta tarefa foi o Bag of Words que consiste na teoria da análise de semântica latente para contar o número de ocorrência de uma palavra e colocar em uma posição do vetor de palavras cuja dimensão é N (sendo N o número de palavras do nosso vocabulário). Uma vez que o vetor estava criado, buscamos, dentre todos os comentários, quais palavras ocorreram menos de 2 vezes e retiramos do conjunto de treinamento, por entender que elas são irrelevantes para a predição.
+
+![Figura 2. Exemplo de arquitetura da rede neural](https://i.imgur.com/gd8muvj.png)
+
+Figura 2. Exemplo de arquitetura da rede neural
+
+A rede neural construída neste projeto é uma MultiLayer Perceptron que é uma classe de rede neural artificial retro alimentada (Feedforward artificial neural network). Quanto a estrutura, a rede possui apenas uma camada escondida, que pode ter seu número de neurônios variado com propósito de testes. O método de treinamento utilizado neste trabalho tem como base o Aprendizado supervisionado na qual é apresentado para a rede neural exemplos de dados de entrada e saída e o treinamento é feito comparando-se a saída atual de acordo com os pesos da rede e a saída esperada.
+
+Para simplificar as análises durantes os passos seguintes foram definidos alguns parâmetros entre eles o **tamanho do Batch** que foi definido como sendo igual ao tamanho do conjunto de dados, ou seja, as atualizações nos pesos da rede neural só deveriam ser feitas após o treinamento com influência de todos os dados do conjunto de treinamento.
+
+Para traçar a curva de acurácia foi definido que os treinamentos seriam feitos ao longo de 30 épocas, ou seja, a rede teria seus pesos atualizados 30 vezes ao longo do treinamento. Com a curva de acurácia, é possível analisar a partir de qual época começou a existir super treinamento (overfit) da rede neural. 
+
+Os parâmetros variáveis foram escolhidos com o intuito de verificar, a partir dos resultados, qual seria a melhor configuração da rede para este tipo de problema, a partir da acurácia obtida. Para isso, foi feito um script que executa a rede com todas as 18 combinações possíveis variando os seguintes parâmetros:
+
+1. Número de neurônios na camada escondida: esta variável influencia em como a rede é capaz de generalizar problemas complexos sem que haja overfitting ou underfitting podem ser 10, 100 ou 1000
+2. Taxa de aprendizado: esta variável influencia o quanto do erro vai influenciar na mudança dos pesos e nesta implementação pode ser 0.1, 0.01 ou 0.001
+3. Otimizador:esta variável diz respeito a forma de tentar minimizar o erro de treino pode ser [Adagrad](https://www.tensorflow.org/api_docs/python/tf/train/AdagradOptimizer) ou [Gradiente descendente](https://www.tensorflow.org/api_docs/python/tf/train/GradientDescentOptimizer)
+
+### Resultados
+
+Para a construção dos conjuntos de treinamento e teste dividiu-se o conjunto amostral em duas partes, sendo o conjunto de treino igual a 90% e o conjunto de testes 10% do conjunto amostral, a escolha dos valores de teste era determinística e obtida sempre a partir dos 10% primeiros itens resultados da execução do pré processador. 
+
+Todos os treinamentos foram executados com o mesmo número de épocas (30) e sofreram variações no número de neurônios na camada escondida, taxa de aprendizagem e otimizadores, ao total foram um total de 18 execuções, porém, foram selecionadas as 3 que consideramos mais adequadas para análise neste relatório.
+
+A primeira das execuções a ser discutida, utilizou do otimizador Adagrad, com 0.1 de taxa de aprendizagem e 10 neurônios na camada escondida. Como resultado, obtivemos uma acurácia máxima de 0,77777780 que apareceu pela primeira vez na sétima época de treinamento e uma acurácia final de 0,64444447 na trigésima e última época, já o erro era de 81242,1 na primeira época e de 1402,4827 na última.
+
+A segunda execução também utilizou do otimizador Adagrad, entretanto com um taxa de aprendizado de 0.001 e um total de 1000 neurônios na camada escondida o que gerou uma acurácia máxima de 0,75555557 na décima sétima época e se manteve fixa até a última época, já o erro começou em 14153884 na primeira época e reduziu-se até 31707,559 na última época.
+
+Já na terceira execução o otimizador utilizado foi o Gradiente descendente, com uma taxa de aprendizado de 0.001 e 1000 neurônios na camada escondida, como resultado, obtivemos uma acurácia máxima de 0,55555560 na segunda época, que se alterou com 0,44444445 até a última época. O mesmo ocorreu para o erro que começou com um valor de 12434655 e na última época foi de 85528,09.
+
+Ao compararmos os dados obtidos entre a primeira e segunda execução, podemos perceber que um algoritmo com uma maior taxa de aprendizado conseguiu chegar mais rápido em uma acurácia maior, entretanto sofreu muita alteração com o passar das épocas (podemos observar no gráfico 1) e acabou terminando com uma acurácia inferior a que foi obtida anteriormente, já na segunda execução, a acurácia final é mais estável, principalmente por que a taxa de aprendizado é menor. Acreditamos que, com um número maior de épocas, a segunda execução seria capaz de atingir um nível maior de acurácia, principalmente se observamos o seu erro, que foi descendente durante todo o treinamento.
+
+![Gráfico 1. Gráfico das acurácias dos testes analisados](https://i.imgur.com/CYWvhzE.png)
+
+Gráfico 1. Gráfico das acurácias dos testes analisados
+
+Já quando comparamos a primeira e a segunda execução com a terceira execução, que utilizou um algoritmo diferente de otimização (gradiente descendente) percebemos que ele teve problemas (preso em algum vale muito profundo), mesmo com uma taxa de aprendizagem pequena, em encontrar o valor mínimo da função, e acabou não alcançando uma taxa de acurácia satisfatória.
+
+![Gráfico 2. Gráfico dos erros dos testes analisados](https://i.imgur.com/MXV5qFq.png)
+
+Gráfico 2. Gráfico dos erros dos testes analisados
