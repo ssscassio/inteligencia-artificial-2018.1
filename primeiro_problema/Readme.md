@@ -74,14 +74,14 @@ O pré processamento tem como função:
 - Gerar *Dataset* com **reviews** escolhidos de forma aleatória
 - Gerar diferentes conjuntos de dados de treinamento 
 	- Base de dados padrão desbalanceada
-	- Base de dados sobreamostrada
-	- Base de dados subamostrada
+	- Base de dados sob-amostrada
+	- Base de dados sub-amostrada
 - Aplicar limiar na avaliação por estrelas (1 a 3 = negativo; 4 e 5 = positivo)
 - Randomizar os reviews no *Dataset*
 
-Uma das soluções para o problema de desbalanceamento de dados de treinamento é a abordagem de pré-processamento de dados, onde o objetivo é balancear o conjunto de treinamento através de mecanismos de reamostragem de dados no espaço de entrada, que incluem sobreamostragem da classe minoritária, subamostragem da classe majoritária ou a combinação de ambas as técnicas.
+Uma das soluções para o problema de desbalanceamento de dados de treinamento é a abordagem de pré-processamento de dados, onde o objetivo é balancear o conjunto de treinamento através de mecanismos de re-amostragem de dados no espaço de entrada, que incluem sob-amostragem da classe minoritária, subamostragem da classe majoritária ou a combinação de ambas as técnicas.
 
-A sobreamostragem é baseada na replicação de exemplos preexistentes ou na geração de dados sintéticos. Neste caso, replicamos a classe minoritária *(reviews negativos)* até o tamanho de sua população se igualar a dos reviews positivos *(classe majoritária)*.
+A sob-amostragem é baseada na replicação de exemplos preexistentes ou na geração de dados sintéticos. Neste caso, replicamos a classe minoritária *(reviews negativos)* até o tamanho de sua população se igualar a dos reviews positivos *(classe majoritária)*.
 
 A subamostragem envolve a eliminação de exemplos da classe majoritária. Os exemplos a serem eliminados podem ser escolhidos aleatoriamente *(subamostragem aleatória)* ou a partir de alguma informação a priori *(subamostragem informativa)*. Neste projeto, foi adotada a remoção de elementos da classe majoritária *(reviews positivos)* de forma aleatória até o tamanho da sua população se igualar a dos reviews negativos *(classe minoritária)*
 
@@ -126,15 +126,15 @@ Uma vez que os dados já estavam minerados e disponíveis para uso, iniciou-se a
 
 Figura 2. Exemplo de arquitetura da rede neural
 
-A rede neural construída neste projeto é uma MultiLayer Perceptron que é uma classe de rede neural artificial retro alimentada (Feedforward artificial neural network). Quanto a estrutura, a rede possui apenas uma camada escondida, que pode ter seu número de neurônios variado com propósito de testes. O método de treinamento utilizado neste trabalho tem como base o Aprendizado supervisionado na qual é apresentado para a rede neural exemplos de dados de entrada e saída e o treinamento é feito comparando-se a saída atual de acordo com os pesos da rede e a saída esperada.
+A rede neural construída neste projeto é uma MultiLayer Perceptron que é uma classe de rede neural artificial retro alimentada (*Feedforward artificial neural network*). Quanto a estrutura, a rede possui apenas uma camada escondida, que pode ter seu número de neurônios variado com propósito de testes. O método de treinamento utilizado neste trabalho tem como base o Aprendizado supervisionado na qual é apresentado para a rede neural exemplos de dados de entrada e saída e o treinamento é feito comparando-se a saída atual de acordo com os pesos da rede e a saída esperada.
 
 Para simplificar as análises durantes os passos seguintes foram definidos alguns parâmetros entre eles o **tamanho do Batch** que foi definido como sendo igual ao tamanho do conjunto de dados, ou seja, as atualizações nos pesos da rede neural só deveriam ser feitas após o treinamento com influência de todos os dados do conjunto de treinamento.
 
-Para traçar a curva de acurácia foi definido que os treinamentos seriam feitos ao longo de 30 épocas, ou seja, a rede teria seus pesos atualizados 30 vezes ao longo do treinamento. Com a curva de acurácia, é possível analisar a partir de qual época começou a existir super treinamento (overfit) da rede neural. 
+Para traçar a curva de acurácia foi definido que os treinamentos seriam feitos ao longo de 30 épocas, ou seja, a rede teria seus pesos atualizados 30 vezes ao longo do treinamento. Com a curva de acurácia, é possível analisar a partir de qual época começou a existir super treinamento (*overfitting*) da rede neural. 
 
 Os parâmetros variáveis foram escolhidos com o intuito de verificar, a partir dos resultados, qual seria a melhor configuração da rede para este tipo de problema, a partir da acurácia obtida. Para isso, foi feito um script que executa a rede com todas as 18 combinações possíveis variando os seguintes parâmetros:
 
-1. Número de neurônios na camada escondida: esta variável influencia em como a rede é capaz de generalizar problemas complexos sem que haja overfitting ou underfitting podem ser 10, 100 ou 1000
+1. Número de neurônios na camada escondida: esta variável influencia em como a rede é capaz de generalizar problemas complexos sem que haja *overfitting* ou *underfitting* podem ser 10, 100 ou 1000
 2. Taxa de aprendizado: esta variável influencia o quanto do erro vai influenciar na mudança dos pesos e nesta implementação pode ser 0.1, 0.01 ou 0.001
 3. Otimizador:esta variável diz respeito a forma de tentar minimizar o erro de treino pode ser [Adagrad](https://www.tensorflow.org/api_docs/python/tf/train/AdagradOptimizer) ou [Gradiente descendente](https://www.tensorflow.org/api_docs/python/tf/train/GradientDescentOptimizer)
 
@@ -163,7 +163,7 @@ Já quando comparamos a primeira e a segunda execução com a terceira execuçã
 Gráfico 2. Gráfico dos erros dos testes analisados
 
 
-| Época    | Acurária   | Erro      |
+| Época    | Acurácia   | Erro      |
 | -------- | ---------- | --------- |
 | 1        | 0,53333336 | 81242,1   |
 | 2        | 0,57777780 | 254597,67 |
@@ -195,9 +195,10 @@ Gráfico 2. Gráfico dos erros dos testes analisados
 | 28       | 0,77777780 | 1417,2759 |
 | 29       | 0,77777780 | 1412,7798 |
 | 30       | 0,64444447 | 1402,4827 |
+
 Tabela 1. Primeira execução - Adagrad 0.1 de taxa de aprendizagem com 10 neurônios na camada intermediária 
 
-| Época    | Acurária   | Erro      |
+| Época    | Acurácia   | Erro      |
 | -------- | ---------- | --------- |
 | 1        | 0,44444445 | 14153884  |
 | 2        | 0,55555560 | 31660958  |
@@ -229,9 +230,10 @@ Tabela 1. Primeira execução - Adagrad 0.1 de taxa de aprendizagem com 10 neur�
 | 28       | 0,75555557 | 32493,977 |
 | 29       | 0,75555557 | 32076,504 |
 | 30       | 0,75555557 | 31707,559 |
+
 Tabela 2. Segunda execução - Adagrad 0.001 de taxa de aprendizagem com 1000 neurônios na camada intermediária 
 
-| Época    | Acurária            | Erro      |
+| Época    | Acurácia            | Erro      |
 | -------- | ------------------- | --------- |
 | 1        | 0,44444445	12434655 |
 | 2        | 0,55555560          | 12434655  |
