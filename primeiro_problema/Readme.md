@@ -11,11 +11,11 @@ A primeira etapa do projeto era decidir qual seria o site que iriamos utilizar p
 
 ## Serviços pensados para ter seus comentários analisados
 - [Google Play](https://play.google.com/store)
-	Reviews de aplicativos mobile (Estrelas de 1 a 5)
+    Reviews de aplicativos mobile (Estrelas de 1 a 5)
 - [TripAdvisor](https://www.tripadvisor.com/)
-	Comentários e avaliação sobre locais feito, geralmente, por turistas (Pontos de 1 a 5)
+    Comentários e avaliação sobre locais feito, geralmente, por turistas (Pontos de 1 a 5)
 - [Steam](http://store.steampowered.com/)
-	Avaliação de jogos: Comentários e Avaliação(Recomendado/Não recomendado)
+    Avaliação de jogos: Comentários e Avaliação(Recomendado/Não recomendado)
   
 Para criar o nosso *Dataset* de comentários e pontuação foi pensado inicialmente fazer um crawler percorrendo os sites e armazenando as informações em um banco que tivéssemos controle
 
@@ -42,14 +42,14 @@ Existe um problema no Dataset nesse ponto pois ele contém informações não re
 ### Exemplo de Dado (Crawler)
 ```
 {
-	"id": "gp:AOqpTOHSkmGFE_awFeeZXD5OC5CFWCQlVJqCMFwbOri1ZQHaegI58h9vsvLYVmu1Cth5YHhm2UfY3VZsfUqT8w",
-	"userName": "Gabriela Cunha Alves",
-	"userImage": "https://lh3.googleusercontent.com/-JS5R9YV_OJo/AAAAAAAAAAI/AAAAAAAAAAA/ACLGyWCS0TCRI5hzCa2TScenJ7wxSmHtVw/w96-h96-p/photo.jpg",
-	"date": "8 de junho de 2016",
-	"url": "https://play.google.com/store/apps/details?id=com.mcdonalds.app&reviewId=Z3A6QU9xcFRPSFNrbUdGRV9hd0ZlZVpYRDVPQzVDRldDUWxWSnFDTUZ3Yk9yaTFaUUhhZWdJNThoOXZzdkxZVm11MUN0aDVZSGhtMlVmWTNWWnNmVXFUOHc",
-	"score": 1,
-	"title": "Não gostei",
-	"text": "Não gostei Pois me registrei e não encontrou nelhum restaurante. Sou de Mogi das cruzes. As vezes sou eu quem não soube mecher,mas deveria também ter a versão português. Se tiverem uma resposta. Me ajudem pfv. Ai eu torno a baixar ✌"
+    "id": "gp:AOqpTOHSkmGFE_awFeeZXD5OC5CFWCQlVJqCMFwbOri1ZQHaegI58h9vsvLYVmu1Cth5YHhm2UfY3VZsfUqT8w",
+    "userName": "Gabriela Cunha Alves",
+    "userImage": "https://lh3.googleusercontent.com/-JS5R9YV_OJo/AAAAAAAAAAI/AAAAAAAAAAA/ACLGyWCS0TCRI5hzCa2TScenJ7wxSmHtVw/w96-h96-p/photo.jpg",
+    "date": "8 de junho de 2016",
+    "url": "https://play.google.com/store/apps/details?id=com.mcdonalds.app&reviewId=Z3A6QU9xcFRPSFNrbUdGRV9hd0ZlZVpYRDVPQzVDRldDUWxWSnFDTUZ3Yk9yaTFaUUhhZWdJNThoOXZzdkxZVm11MUN0aDVZSGhtMlVmWTNWWnNmVXFUOHc",
+    "score": 1,
+    "title": "Não gostei",
+    "text": "Não gostei Pois me registrei e não encontrou nelhum restaurante. Sou de Mogi das cruzes. As vezes sou eu quem não soube mecher,mas deveria também ter a versão português. Se tiverem uma resposta. Me ajudem pfv. Ai eu torno a baixar ✌"
 }
 ```
 
@@ -73,9 +73,9 @@ O pré processamento tem como função:
 - Remover informações indesejáveis do *Dataset* (ex.: userName, userImage, date, url,...)
 - Gerar *Dataset* com **reviews** escolhidos de forma aleatória
 - Gerar diferentes conjuntos de dados de treinamento 
-	- Base de dados padrão desbalanceada
-	- Base de dados sob-amostrada
-	- Base de dados sub-amostrada
+    - Base de dados padrão desbalanceada
+    - Base de dados sob-amostrada
+    - Base de dados sub-amostrada
 - Aplicar limiar na avaliação por estrelas (1 a 3 = negativo; 4 e 5 = positivo)
 - Randomizar os reviews no *Dataset*
 
@@ -101,8 +101,8 @@ Sub length:  450
 ### Exemplo de Dado (Pré-Processador)
 ```
 {
-	"text": "Excelente Intuitivo e fácil de configurar",
-	"qualification": 1
+    "text": "Excelente Intuitivo e fácil de configurar",
+    "qualification": 1
 }
 ```
 ### Tempo de execução (Pré-Processador)
@@ -235,7 +235,7 @@ Tabela 2. Segunda execução - Adagrad 0.001 de taxa de aprendizagem com 1000 ne
 
 | Época    | Acurácia            | Erro      |
 | -------- | ------------------- | --------- |
-| 1        | 0,44444445	12434655 |
+| 1        | 0,44444445          | 12434655  |
 | 2        | 0,55555560          | 12434655  |
 | 3        | 0,55555560          | 4528,086  |
 | 4        | 0,44444445          | 148089,89 |
