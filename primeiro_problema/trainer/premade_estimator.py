@@ -4,7 +4,6 @@ import tensorflow as tf
 import comments_data
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--batch_size', default=100, type=int, help='batch size')
 parser.add_argument('--train_steps', default=10, type=int,
                     help='number of training steps')
 parser.add_argument('--optimizer', default='adagrad',
