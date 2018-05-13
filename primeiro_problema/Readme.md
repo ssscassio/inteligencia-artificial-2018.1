@@ -264,4 +264,4 @@ Tabela 2. Segunda execução - Adagrad 0.001 de taxa de aprendizagem com 1000 ne
 | 29       | 0,44444445          | 43089,89  |
 | 30       | 0,55555560          | 85528,09  |
 
-Tabela 2. Segunda execução - Gradiente descendente 0.001 de taxa de aprendizagem com 1000 neurônios na camada intermediária 
+Tabela 3. Segunda execução - Gradiente descendente 0.001 de taxa de aprendizagem com 1000 neurônios na camada intermediária 
