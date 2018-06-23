@@ -14,3 +14,5 @@ Trabalhos desenvolvidos durante a disciplina [Inteligência Artificial Não Simb
 ### [Problema 1](./primeiro_problema)
 - O propósito desse projeto é cobrir os conceitos que envolvem Redes Neurais Artificiais em especial os da classe MPL (MultiLayer Perceptron)
 
+### [Problema 2](./segundo_problema)
+- O propósito desse projeto é cobrir os conceitos que envolvem Computação Evolutiva e algoritmos genéticos.
