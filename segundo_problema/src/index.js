@@ -12,8 +12,13 @@ const ROBOT_LOOK = { LEFT: 0, TOP: 1, RIGHT: 2, BOTTOM: 3 };
 // Robot Chromosome Size: ( Map_fields_size )^ Robot_sensors_count
 const CHROMOSOME_SIZE = 64;
 // Mutate Rate to each Locus on Chromosome
-const MUTATE_RATE = 0.3;
+const MUTATE_RATE = 1 / 62;
 
+/**
+ * Create the first generation of subjects fully randomized
+ * @returns {Array} list of robot objects generated randomly 
+ *  {chromosome, fitness, generation}
+ */
 function initialization() {
     firstGeneration = [];
     for (var i = 0; i < POPULATION_SIZE; i++) {
@@ -98,7 +103,6 @@ function calculateFitness(generation, map, initialPosition, desirablePosition) {
 
     generation.forEach((robot) => {
         var newRobot = updateRobotFitness(robot, map, initialPosition, desirablePosition);
-        console.log(newRobot.fitness);
         generationWithFitness.push(newRobot);
     });
     return generationWithFitness;
@@ -123,7 +127,6 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
         }
         // Check if reached the final block
         if (map[actualPosition.y][actualPosition.x] == MAP.END) {
-            //TODO: Decrease Amount of Fitness for reach the end
             reach = true;
             break;
         }
@@ -135,11 +138,16 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
     fitness += energySpent * 10;
     fitness += distance * 30;
     fitness -= reach ? -1000 : 0;
-    fitness += timesOnWall * 30;
+    fitness += timesOnWall * 300;
     newRobot.fitness = fitness;
     return newRobot;
 }
 
+/**
+ * Computes the distances betweens pairs of elements
+ * @param {Object} actualPosition first position, object with x and y fields { x, y }
+ * @param {Object} desirablePosition second position, object with x and y fields { x, y }
+ */
 function euclideanDistance(actualPosition, desirablePosition) {
     return Math.floor(
         Math.sqrt(
@@ -149,11 +157,23 @@ function euclideanDistance(actualPosition, desirablePosition) {
     );
 }
 
+/**
+ * Computes the distance that would be traveled to get 
+ * from one data point to the other if a grid-like path is followed.
+ * @param {Object} actualPosition first position, object with x and y fields { x, y }
+ * @param {Object} desirablePosition second position, object with x and y fields { x, y }
+ */
 function manhattanDistance(actualPosition, desirablePosition) {
     return Math.abs(desirablePosition.x - actualPosition.x) +
         Math.abs(desirablePosition.y - actualPosition.y);
 }
 
+/**
+ * Computes the absolute magnitude of the difference between coordinates
+ * of a pair of objects
+ * @param {Object} actualPosition first position, object with x and y fields { x, y }
+ * @param {Object} desirablePosition second position, object with x and y fields { x, y }
+ */
 function chebyshevDistance(actualPosition, desirablePosition) {
     return Math.max(
         Math.abs(desirablePosition.x - actualPosition.x),
@@ -217,6 +237,16 @@ function getPhenotype(chromosome) {
     return phenotype;
 }
 
+/**
+ * Read the sensors of robot based on his position on the map
+ * 
+ * @param {[][]} map the Map of training
+ * @param {Object} robotPosition Object that must contain 3 fields: { x, y, side }
+ *  that represents the position x and y of the robot on the map and the direction in 
+ * which the robot is looking (0:Left, 1:Top, 2:Right, 3:Bottom)
+ * @returns {Object} a object with 3 fields: { left, front, right } that represents 
+ * the infos from the map of the left, front and right sensors of the robot
+ */
 function readSensors(map, robotPosition) {
     const { x, y, side } = robotPosition;
     const
@@ -246,7 +276,7 @@ function readSensors(map, robotPosition) {
 
 function main() {
     /** Main **/
-    console.log("Computação Evolutiva");
+    console.log("Robot Evolutionary Computing");
 
     var bestSubjectsOverGenerations = [];
     var meanFitnessOverGenerations = [];
@@ -289,22 +319,22 @@ function main() {
         actualGenerationWithFitness = calculateFitness(actualGeneration, map, initialPosition, desirablePosition);
         actualGenerationSorted = sortByFitness(actualGenerationWithFitness);
 
+        // Get the best robot (Subject)
         var bestSubject = actualGenerationSorted[0];
 
         bestSubjectsOverGenerations.push(bestSubject);
-        console.log(bestSubjectsOverGenerations);
         bestFitnessOverGenerations.push(bestSubject.fitness);
         var meanFitness = fitnessMean([...actualGenerationSorted]);
         meanFitnessOverGenerations.push(meanFitness);
 
-        // 3.2 Showing info about this generation
+        //  3.2 Showing info about this generation
         console.log("Generation: ", generationIndex);
         console.log("Best Fitness: ", bestSubject.fitness, "; Best Subject: ");
         console.log(getPhenotype(bestSubject.chromosome))
         console.log("Mean Fitness: ", fitnessMean(actualGenerationSorted));
 
-        // 3.3 Creating the next Generation
-        // 3.3.2 Mutation
+        //  3.3 Creating the next Generation
+        //      3.3.2 Mutation
         // newRobot = mutateRobot(bestSubject);
         nextGeneration = actualGenerationSorted;
 
