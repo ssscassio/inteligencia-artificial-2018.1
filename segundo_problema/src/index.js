@@ -11,7 +11,8 @@ const ROBOT_MOVE = { TURN_LEFT: 0, MOVE_FRONT: 1, TURN_RIGHT: 2 };
 const ROBOT_LOOK = { LEFT: 0, TOP: 1, RIGHT: 2, BOTTOM: 3 };
 // Robot Chromosome Size: ( Map_fields_size )^ Robot_sensors_count
 const CHROMOSOME_SIZE = 64;
-
+// Mutate Rate to each Locus on Chromosome
+const MUTATE_RATE = 0.3;
 
 function initialization() {
     firstGeneration = [];
@@ -38,12 +39,23 @@ function initialization() {
  * @param {float} mutationRate Float value between 0 and 1 that will define if the mutation will
  * happen or not 
  */
-function mutate(initialValue, mutationRange = 3, mutationRate = 0.2) {
+function mutate(initialValue, mutationRange = 3, mutationRate = MUTATE_RATE) {
     if (Math.random() <= mutationRate) {
         return Math.floor((Math.random() * (mutationRange)));
     } else {
         return initialValue;
     }
+}
+
+function mutateRobot(robot) {
+    var newRobot = Object.assign({}, robot);
+    var newChromosome = [];
+    newRobot.chromosome.forEach((locus) => {
+        var newLocus = mutate(locus, 3, MUTATE_RATE);
+        newChromosome.push(newLocus);
+    });
+    newRobot.chromosome = newChromosome;
+    return newRobot;
 }
 
 /**
@@ -82,10 +94,18 @@ function bestFitnessSubject(generation) {
 }
 
 function calculateFitness(generation, map, initialPosition, desirablePosition) {
-    return generation.concat().map((robot) => updateRobotFitness(robot, map, initialPosition, desirablePosition));
+    var generationWithFitness = [];
+
+    generation.forEach((robot) => {
+        var newRobot = updateRobotFitness(robot, map, initialPosition, desirablePosition);
+        console.log(newRobot.fitness);
+        generationWithFitness.push(newRobot);
+    });
+    return generationWithFitness;
 }
 
 function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
+    var newRobot = Object.assign({}, robot);
     var energySpent = 0;
     var actualPosition = initialPosition;
     var fitness = 1000;
@@ -96,13 +116,13 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
         // Get sensor values
         var sensor = readSensors(map, actualPosition);
         // Update the actualPosition
-        actualPosition = robotMove(robot.chromosome, actualPosition, sensor, map);
+        actualPosition = robotMove(newRobot.chromosome, actualPosition, sensor, map);
         // Check if move to a Wall block
-        if (map[actualPosition.x][actualPosition.y] == MAP.WALL) {
+        if (map[actualPosition.y][actualPosition.x] == MAP.WALL) {
             timesOnWall += 1;
         }
         // Check if reached the final block
-        if (map[actualPosition.x][actualPosition.y] == MAP.END) {
+        if (map[actualPosition.y][actualPosition.x] == MAP.END) {
             //TODO: Decrease Amount of Fitness for reach the end
             reach = true;
             break;
@@ -116,8 +136,8 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
     fitness += distance * 30;
     fitness -= reach ? -1000 : 0;
     fitness += timesOnWall * 30;
-    robot.fitness = fitness;
-    return robot;
+    newRobot.fitness = fitness;
+    return newRobot;
 }
 
 function euclideanDistance(actualPosition, desirablePosition) {
@@ -142,7 +162,7 @@ function chebyshevDistance(actualPosition, desirablePosition) {
 
 function robotMove(chromosome, actualPosition, sensor, map) {
     const { x, y, side } = actualPosition;
-    var nextPosition = actualPosition;
+    var nextPosition = Object.assign({}, actualPosition);
     var phenotype = getPhenotype(chromosome);
 
     const ROBOT_ABSOLUTE_COORDINATE = //[Left, Top, Right, Bottom]
@@ -266,29 +286,36 @@ function main() {
     //  3. Iteration over Generations
     for (var generationIndex = 0; generationIndex < LIMIT_OF_GENERATIONS; generationIndex++) {
         //  3.1. Calculate the fitness of each subject in generation
-        actualGeneration = calculateFitness([...actualGeneration], map, initialPosition, desirablePosition);
-        actualGenerationSorted = sortByFitness([...actualGeneration]);
-        // console.log(actualGeneration)
-        console.log("Generation:", generationIndex);
-        actualGenerationSorted.forEach(robot => {
-            console.log(robot.fitness);
-        })
+        actualGenerationWithFitness = calculateFitness(actualGeneration, map, initialPosition, desirablePosition);
+        actualGenerationSorted = sortByFitness(actualGenerationWithFitness);
+
         var bestSubject = actualGenerationSorted[0];
+
         bestSubjectsOverGenerations.push(bestSubject);
+        console.log(bestSubjectsOverGenerations);
         bestFitnessOverGenerations.push(bestSubject.fitness);
         var meanFitness = fitnessMean([...actualGenerationSorted]);
         meanFitnessOverGenerations.push(meanFitness);
 
-        actualGeneration = [...actualGenerationSorted];
-        // console.log("Generation: ", generationIndex);
-        // console.log("Best Subject: ", getPhenotype(bestSubject.chromosome));
-        // console.log("Best Fitness: ", bestSubject.fitness);
-        // console.log("Mean Fitness: ", fitnessMean(actualGeneration));
+        // 3.2 Showing info about this generation
+        console.log("Generation: ", generationIndex);
+        console.log("Best Fitness: ", bestSubject.fitness, "; Best Subject: ");
+        console.log(getPhenotype(bestSubject.chromosome))
+        console.log("Mean Fitness: ", fitnessMean(actualGenerationSorted));
+
+        // 3.3 Creating the next Generation
+        // 3.3.2 Mutation
+        // newRobot = mutateRobot(bestSubject);
+        nextGeneration = actualGenerationSorted;
+
+
+        actualGeneration = nextGeneration;
     }
+    console.log("Map: ");
     console.log(map);
 
-    // console.log("Bests Fitness", bestFitnessOverGenerations);
-    // console.log("Means Fitness: ", meanFitnessOverGenerations);
+    console.log("Bests Fitness over Generations: ", bestFitnessOverGenerations);
+    console.log("Means Fitness over Generations: ", meanFitnessOverGenerations);
 }
 
 main();
