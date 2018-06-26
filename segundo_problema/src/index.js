@@ -114,7 +114,7 @@ function calculateFitness(generation, map, initialPosition, desirablePosition) {
 function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
     var newRobot = Object.assign({}, robot);
     var energySpent = 0;
-    var actualPosition = initialPosition;
+    var actualPosition = Object.assign({}, { ...initialPosition });
     var fitness = 1000;
     var reach = false;
     var timesOnWall = 0;
@@ -347,11 +347,37 @@ function main() {
     console.log("Map: ");
     console.log(map);
 
-    displayData(
+    displayData.initialize(
         bestFitnessOverGenerations,
         meanFitnessOverGenerations,
         bestSubjectsOverGenerations,
         map);
+
+    simulateBestRobot(
+        bestSubjectsOverGenerations[bestSubjectsOverGenerations.length - 1],
+        map,
+        initialPosition,
+        displayData.simulate
+    )
 }
 
+function simulateBestRobot(robot, map, initialPosition, callback) {
+    var bestRobot = Object.assign({}, robot);
+    var energySpent = 0;
+    var actualPosition = Object.assign({}, { ...initialPosition });
+
+    callback(actualPosition, map);
+
+    var logInterval = setInterval(function () {
+        var sensor = readSensors(map, actualPosition);
+        actualPosition = robotMove(bestRobot.chromosome, actualPosition, sensor, map, true);
+        if (energySpent == LIMIT_OF_ROBOT_STEPS) {
+            clearInterval(logInterval);
+        } else {
+            callback(actualPosition, map);
+        }
+        energySpent++;
+    }, 500);
+
+}
 main();
