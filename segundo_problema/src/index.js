@@ -55,11 +55,11 @@ function mutate(initialValue, mutationRange = 3, mutationRate = MUTATE_RATE) {
     }
 }
 
-function mutateRobot(robot) {
+function mutateRobot(robot, mutationRate) {
     var newRobot = Object.assign({}, robot);
     var newChromosome = [];
     newRobot.chromosome.forEach((locus) => {
-        var newLocus = mutate(locus, 3, MUTATE_RATE);
+        var newLocus = mutate(locus, 3, mutationRate);
         newChromosome.push(newLocus);
     });
     newRobot.chromosome = newChromosome;
@@ -138,11 +138,11 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
 
     // console.log(energySpent, distance, reach, timesOnWall);
     // Adaptation Function - Fitness - Ponderations
-    fitness += energySpent * 10;
-    fitness += distance * 30;
+    fitness += energySpent * 50;
+    fitness += distance * 300;
     fitness -= reach ? -1000 : 0;
     fitness += timesOnWall * 300;
-    newRobot.fitness = fitness;
+    newRobot.fitness = fitness + getRandomInt(0, 1000);
     return newRobot;
 }
 
@@ -277,13 +277,60 @@ function readSensors(map, robotPosition) {
     }
 }
 
+function createChildren(bestCandidates) {
+    var candidatesShuffled = []
+    var bestCandidatesChildren = [];
+    function shuffle(array) {
+        var currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+    candidatesShuffled = shuffle([...bestCandidates]);
+    for (var pair = 0; pair < candidatesShuffled.length; pair += 2) {
+        var newRobot = {
+            chromosome: breed(candidatesShuffled[pair].chromosome, candidatesShuffled[pair + 1].chromosome),
+            fitness: null,
+            generation: null
+        }
+        bestCandidatesChildren.push(newRobot);
+    }
+
+    return bestCandidatesChildren;
+}
+
+function breed(firstChromosome, secondChromosome) {
+    let cutPoint1 = getRandomInt(0, firstChromosome.length - 1);
+    let cutPoint2 = getRandomInt(cutPoint1, firstChromosome.length - 1);
+
+    return firstChromosome.slice(0, cutPoint1 + 1)
+        .concat(secondChromosome.slice(cutPoint1 + 1, cutPoint2 + 1),
+            firstChromosome.slice(cutPoint2 + 1, firstChromosome.length));
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min))) + Math.ceil(min);
+}
+
 function main() {
     /** Main **/
     console.log("Robot Evolutionary Computing");
 
     var bestSubjectsOverGenerations = [];
-    var meanFitnessOverGenerations = [];
     var bestFitnessOverGenerations = [];
+    var meanFitnessOverGenerations = [];
 
     var nextGeneration = [];
     //  1. Initialize the first generation of subjects
@@ -319,12 +366,12 @@ function main() {
     //  3. Iteration over Generations
     for (var generationIndex = 0; generationIndex < LIMIT_OF_GENERATIONS; generationIndex++) {
         //  3.1. Calculate the fitness of each subject in generation
-        actualGenerationWithFitness = calculateFitness(actualGeneration, map, initialPosition, desirablePosition);
-        actualGenerationSorted = sortByFitness(actualGenerationWithFitness);
+        actualGenerationWithFitness = calculateFitness([...actualGeneration], map, initialPosition, desirablePosition);
+        var actualGenerationSorted = sortByFitness([...actualGenerationWithFitness]);
 
         // Get the best robot (Subject)
-        var bestSubject = actualGenerationSorted[0];
-
+        var bestSubject = Object.assign({}, actualGenerationSorted[0]);
+        console.log(bestSubject.fitness);
         bestSubjectsOverGenerations.push(bestSubject);
         bestFitnessOverGenerations.push(bestSubject.fitness);
         var meanFitness = fitnessMean([...actualGenerationSorted]);
@@ -337,10 +384,29 @@ function main() {
         console.log("Mean Fitness: ", fitnessMean(actualGenerationSorted));
 
         //  3.3 Creating the next Generation
-        //      3.3.2 Mutation
-        // newRobot = mutateRobot(bestSubject);
-        nextGeneration = actualGenerationSorted;
+        //      3.3.1 Crossover
+        var best40Parents = [...actualGenerationSorted.slice(0, Math.floor(POPULATION_SIZE * 0.4))];
+        var new20Children = createChildren(best40Parents);
 
+        //      3.3.2 Mutation
+        //          3.3.1.1 Mutation over Crossover generated children
+        var mutated20Children = [];
+        new20Children.forEach((robot) => {
+            var newRobot = mutateRobot(robot, MUTATE_RATE);
+            mutated20Children.push(newRobot);
+        });
+
+        //          3.3.1.1 Mutation over Best Parents Population
+        var mutated40Parents = [];
+        best40Parents.forEach((robot) => {
+            var newRobot = mutateRobot(robot, MUTATE_RATE * 2);
+            mutated40Parents.push(newRobot);
+        });
+
+        // 40% - Best Subjects from previous generation
+        // 20% - Crossover generated Subjects between 2 parents with 3 cut points (mutationRate = MUTATE_RATE)
+        // 40% - Mutated Best Subjects from previous generation (mutationRate = MUTATE_RATE * 2)
+        nextGeneration = best40Parents.concat(mutated20Children, mutated40Parents);
 
         actualGeneration = nextGeneration;
     }
@@ -371,10 +437,9 @@ function simulateBestRobot(robot, map, initialPosition, callback) {
     var logInterval = setInterval(function () {
         var sensor = readSensors(map, actualPosition);
         actualPosition = robotMove(bestRobot.chromosome, actualPosition, sensor, map, true);
-        if (energySpent == LIMIT_OF_ROBOT_STEPS) {
+        callback(actualPosition, map);
+        if (energySpent == LIMIT_OF_ROBOT_STEPS || map[actualPosition.y][actualPosition.x] == MAP.END) {
             clearInterval(logInterval);
-        } else {
-            callback(actualPosition, map);
         }
         energySpent++;
     }, 500);

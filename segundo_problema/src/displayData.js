@@ -16,16 +16,24 @@ var simulateBox = grid.set(6, 0, 6, 3, blessed.box, {
 module.exports = {
     initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubjectsOverGenerations, map) {
 
-        var fitnessLine = grid.set(0, 0, 6, 6, contrib.line,
+        var fitnessLine = grid.set(0, 0, 6, 12, contrib.line,
             {
                 showNthLabel: 5,
                 label: 'Fitness over Generations',
                 showLegend: true
             })
 
-        var fitnessLog = grid.set(0, 6, 6, 3, contrib.log,
+        var bestFitnessLog = grid.set(6, 6, 6, 3, contrib.log,
             {
                 label: 'Best Subjects Fitness',
+                height: "100%",
+                tags: true,
+                border: { type: "line", fg: "cyan" }
+            });
+
+        var meanFitnessLog = grid.set(6, 3, 6, 3, contrib.log,
+            {
+                label: 'Mean Fitness',
                 height: "100%",
                 tags: true,
                 border: { type: "line", fg: "cyan" }
@@ -45,7 +53,7 @@ module.exports = {
             printableMap += "\n"
         }
 
-        var mapBox = grid.set(0, 9, 6, 3, blessed.box, {
+        var mapBox = grid.set(6, 9, 6, 3, blessed.box, {
             label: 'Training Map',
             align: 'center',
             valign: 'middle',
@@ -53,22 +61,32 @@ module.exports = {
         })
         screen.append(mapBox);
 
-
-        screen.append(fitnessLog);
+        screen.append(bestFitnessLog);
         var i = 0
-        var logInterval = setInterval(function () {
-            fitnessLog.log(
+        var bestLogInterval = setInterval(function () {
+            bestFitnessLog.log(
                 "{blue-fg}Generation:{/blue-fg} " + i + " " +
-                "{red-fg}Fitness:{/red-fg} " + bestSubjectsOverGenerations[i].fitness + "");
+                "{red-fg}Best Fitness:{/red-fg} " + bestFitnessOverGenerations[i] + "");
             i++;
-            if (!bestSubjectsOverGenerations[i]) {
-                clearInterval(logInterval);
+            if (!bestFitnessOverGenerations[i]) {
+                clearInterval(bestLogInterval);
+            }
+        }, 100);
+
+        var j = 0
+        var meanLogInterval = setInterval(function () {
+            meanFitnessLog.log(
+                "{blue-fg}Generation:{/blue-fg} " + j + " " +
+                "{yellow-fg}Mean Fitness:{/yellow-fg} " + meanFitnessOverGenerations[j] + "");
+            j++;
+            if (!meanFitnessOverGenerations[j]) {
+                clearInterval(meanLogInterval);
             }
         }, 100);
 
         var meanFitnessData = {
             title: 'Mean Fitness',
-            style: { line: 'blue' },
+            style: { line: 'yellow' },
             x: meanFitnessOverGenerations.map((value, index) => "" + index),
             y: meanFitnessOverGenerations
         }
@@ -87,7 +105,8 @@ module.exports = {
 
         screen.on('resize', function () {
             fitnessLine.emit('attach');
-            fitnessLog.emit('attach');
+            bestFitnessLog.emit('attach');
+            meanFitnessLog.emit('attach');
             fitnessLine.setData([meanFitnessData, bestFitnessData]);
         });
 
