@@ -1,7 +1,10 @@
+// Imports
+var displayData = require('./displayData');
+
 // Genetic Algorithm Params
 const POPULATION_SIZE = 10;
 const LIMIT_OF_ROBOT_STEPS = 100;
-const LIMIT_OF_GENERATIONS = 10;
+const LIMIT_OF_GENERATIONS = 100;
 // MAP fields
 const MAP = { BLANK: 0, WALL: 1, END: 2, OUT_RANGE: 3 };
 const _ = 0, X = 1, F = 2;
@@ -344,8 +347,11 @@ function main() {
     console.log("Map: ");
     console.log(map);
 
-    console.log("Bests Fitness over Generations: ", bestFitnessOverGenerations);
-    console.log("Means Fitness over Generations: ", meanFitnessOverGenerations);
+    displayData(
+        bestFitnessOverGenerations,
+        meanFitnessOverGenerations,
+        bestSubjectsOverGenerations,
+        map);
 }
 
 main();
