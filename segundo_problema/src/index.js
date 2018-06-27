@@ -342,7 +342,7 @@ function main() {
     //  2. Generate the map
     var map = [ // (y,x)
         [X, X, X, X, X, X, X, X, X, X], // y = 0
-        [X, _, _, _, _, _, _, _, _, X], // |
+        [X, _, _, _, _, _, X, _, _, X], // |
         [X, X, X, X, X, _, _, _, X, X], // |
         [X, X, _, _, X, _, X, X, _, X], // |
         [X, _, _, _, _, _, _, _, _, X], // |
@@ -361,9 +361,9 @@ function main() {
     map[desirablePosition.y][desirablePosition.x] = MAP.END;
     //      2.2. Place the robot on Map
     const initialPosition = {
-        x: 1,
+        x: 8,
         y: 1,
-        side: ROBOT_LOOK.RIGHT
+        side: ROBOT_LOOK.LEFT
     }
 
     //  3. Iteration over Generations

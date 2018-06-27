@@ -13,6 +13,7 @@ var simulateBox = grid.set(6, 0, 6, 3, blessed.box, {
     align: 'center',
     valign: 'middle'
 });
+var positionsPassed = [[], [], [], [], [], [], [], [], [], []];
 
 module.exports = {
     initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubject, evolutionParams, fitnessPonds) {
@@ -136,17 +137,26 @@ module.exports = {
                             simulatedMap += " V ";
                             break;
                     }
-
                 } else if (map[y][x] == MAP.BLANK) {
-                    simulatedMap += "   ";
+                    if (positionsPassed[y][x]) {
+                        simulatedMap += " . ";
+                    } else {
+                        simulatedMap += "   ";
+                    }
                 } else if (map[y][x] == MAP.END) {
                     simulatedMap += " F ";
                 } else {
-                    simulatedMap += "[#]";
+                    if (positionsPassed[y][x]) {
+                        simulatedMap += "[.]";
+                    } else {
+                        simulatedMap += "[#]";
+                    }
                 }
             }
-            simulatedMap += "\n"
+            simulatedMap += "\n";
         }
+
+        positionsPassed[position.y][position.x] = true;
 
         simulateBox.setContent(simulatedMap + "Movements: " + energy++ + "\nPosition: " + JSON.stringify(position));
         screen.render()
