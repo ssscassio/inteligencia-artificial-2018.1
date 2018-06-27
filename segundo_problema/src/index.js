@@ -1,21 +1,24 @@
 // Imports
 var displayData = require('./displayData');
 
-// Genetic Algorithm Params
-const POPULATION_SIZE = 200;
-const LIMIT_OF_ROBOT_STEPS = 100;
-const LIMIT_OF_GENERATIONS = 100;
 // MAP fields
 const MAP = { BLANK: 0, WALL: 1, END: 2, OUT_RANGE: 3 };
-const _ = 0, X = 1, F = 2;
+const _ = 0, X = 1;
 // Robot Moves: Alleles
 const ROBOT_MOVE = { TURN_LEFT: 0, MOVE_FRONT: 1, TURN_RIGHT: 2 };
 // Which Side the robot is looking
 const ROBOT_LOOK = { LEFT: 0, TOP: 1, RIGHT: 2, BOTTOM: 3 };
 // Robot Chromosome Size: ( Map_fields_size )^ Robot_sensors_count
 const CHROMOSOME_SIZE = 64;
+
+// Genetic Algorithm Params
+const POPULATION_SIZE = 400;
+const LIMIT_OF_ROBOT_STEPS = 100;
+const LIMIT_OF_GENERATIONS = 100;
 // Mutate Rate to each Locus on Chromosome
-const MUTATE_RATE = 1 / 62;
+const MUTATE_RATE = 1 / 64;
+// Fitness Ponderations
+const FITNESS_PONDERATIONS = { ENERGY_SPENT: 50, DISTANCE: 300, REACH: -1000, TIMES_ON_WALL: 300 };
 
 /**
  * Create the first generation of subjects fully randomized
@@ -138,11 +141,11 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
 
     // console.log(energySpent, distance, reach, timesOnWall);
     // Adaptation Function - Fitness - Ponderations
-    fitness += energySpent * 50;
-    fitness += distance * 300;
-    fitness -= reach ? -1000 : 0;
-    fitness += timesOnWall * 300;
-    newRobot.fitness = fitness + getRandomInt(0, 1000);
+    fitness += energySpent * FITNESS_PONDERATIONS.ENERGY_SPENT;
+    fitness += distance * FITNESS_PONDERATIONS.DISTANCE;
+    fitness -= reach ? FITNESS_PONDERATIONS.REACH : 0;
+    fitness += timesOnWall * FITNESS_PONDERATIONS.TIMES_ON_WALL;
+    newRobot.fitness = fitness;
     return newRobot;
 }
 
@@ -386,14 +389,14 @@ function main() {
         //  3.3 Creating the next Generation
         //      3.3.1 Crossover
         var best40Parents = [...actualGenerationSorted.slice(0, Math.floor(POPULATION_SIZE * 0.4))];
-        var new20Children = createChildren(best40Parents, generationIndex);
+        var new20Children = createChildren(best40Parents, generationIndex + 1);
 
         //      3.3.2 Mutation
         //          3.3.1.1 Mutation over Crossover generated children
         var mutated20Children = [];
         new20Children.forEach((robot) => {
             var newRobot = mutateRobot(robot, MUTATE_RATE);
-            newRobot.generation = generationIndex;
+            newRobot.generation = generationIndex + 1;
             mutated20Children.push(newRobot);
         });
 
@@ -401,7 +404,7 @@ function main() {
         var mutated40Parents = [];
         best40Parents.forEach((robot) => {
             var newRobot = mutateRobot(robot, MUTATE_RATE * 2);
-            newRobot.generation = generationIndex;
+            newRobot.generation = generationIndex + 1;
             mutated40Parents.push(newRobot);
         });
 
@@ -436,7 +439,8 @@ function main() {
         bestFitnessOverGenerations,
         meanFitnessOverGenerations,
         firstBestSubject,
-        evolutionParams
+        evolutionParams,
+        FITNESS_PONDERATIONS
     );
 
     // Simulate the best robot over generations

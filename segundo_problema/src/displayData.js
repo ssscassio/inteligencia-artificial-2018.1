@@ -1,5 +1,6 @@
 var blessed = require('blessed');
 var contrib = require('blessed-contrib');
+var colors = require('colors/safe');
 var screen = blessed.screen();
 const MAP = { BLANK: 0, WALL: 1, END: 2, OUT_RANGE: 3 };
 const ROBOT_LOOK = { LEFT: 0, TOP: 1, RIGHT: 2, BOTTOM: 3 };
@@ -14,66 +15,74 @@ var simulateBox = grid.set(6, 0, 6, 3, blessed.box, {
 });
 
 module.exports = {
-    initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubjectOverGenerations, evolutionParams) {
+    initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubject, evolutionParams, fitnessPonds) {
 
+        // Fitness Table
+        var fitnessTable = grid.set(6, 8, 6, 4, contrib.table,
+            {
+                keys: true,
+                fg: 'white',
+                selectedFg: 'black',
+                selectedBg: 'white',
+                interactive: true,
+                label: 'Fitness Table',
+                columnWidth: [12, 12, 12]
+            });
+
+        fitnessTable.setData(
+            {
+                headers: ['Generation', 'Best Fitness', 'Mean Fitness'],
+                data: bestFitnessOverGenerations.map((fitness, index) => [
+                    colors.green(index), colors.red(fitness), colors.yellow(meanFitnessOverGenerations[index])])
+            });
+        fitnessTable.focus();
+        screen.append(fitnessTable);
+
+        // Evolution Params
+        var evolutionParamsBox = grid.set(6, 3, 3, 2.5, blessed.box, {
+            label: 'Evolution Params',
+            padding: 1,
+            valign: 'middle'
+        })
+        evolutionParamsBox.setContent(
+            "Population Size:       " + evolutionParams.populationSize + "\n" +
+            "Limit of Robot Steps:  " + evolutionParams.limitOfRobotSteps + "\n" +
+            "Limit of Generations:  " + evolutionParams.limitOfGenerations + "\n" +
+            "Mutation Rate:         " + (evolutionParams.mutationRate * 100).toFixed(2) + " %");
+        screen.append(evolutionParamsBox);
+
+        // Fitness Ponderations
+        var fitnessPondBox = grid.set(6, 5.5, 3, 2.5, blessed.box, {
+            label: 'Fitness Ponderations',
+            padding: 1,
+            valign: 'middle'
+        })
+        fitnessPondBox.setContent(
+            "For each energy spent:      " + fitnessPonds.ENERGY_SPENT + "\n" +
+            "For each unity of distance: " + fitnessPonds.DISTANCE + "\n" +
+            "For each time on the wall:  " + fitnessPonds.TIMES_ON_WALL + "\n" +
+            "If reach the end:           " + fitnessPonds.REACH);
+        screen.append(fitnessPondBox);
+
+        // Best Subject
+        var bestSubjectBox = grid.set(9, 3, 3, 5, blessed.box, {
+            label: 'Best Subject',
+            padding: 1,
+            valign: 'middle'
+        })
+        bestSubjectBox.setContent(
+            "Generation of first occurrence:  " + bestSubject.generation + "\n" +
+            "Chromosome: " + bestSubject.chromosome + "\n" +
+            "Fitness:                      " + bestSubject.fitness);
+        screen.append(bestSubjectBox);
+
+        // Fitness Graph
         var fitnessLine = grid.set(0, 0, 6, 12, contrib.line,
             {
                 showNthLabel: 5,
                 label: 'Fitness over Generations',
                 showLegend: true
-            })
-
-        var bestFitnessLog = grid.set(6, 6, 6, 3, contrib.log,
-            {
-                label: 'Best Subjects Fitness',
-                height: "100%",
-                tags: true,
-                border: { type: "line", fg: "cyan" }
             });
-
-        var meanFitnessLog = grid.set(6, 3, 6, 3, contrib.log,
-            {
-                label: 'Mean Fitness',
-                height: "100%",
-                tags: true,
-                border: { type: "line", fg: "cyan" }
-            });
-
-        evolutionPrintable = "" +
-            "Population Size:       " + evolutionParams.populationSize + "\n" +
-            "Limit of Robot Steps:  " + evolutionParams.limitOfRobotSteps + "\n" +
-            "Limit of Generations:  " + evolutionParams.limitOfGenerations + "\n" +
-            "Mutation Rate:         " + (evolutionParams.mutationRate * 100).toFixed(2) + " %\n";
-        var evolutionParamsBox = grid.set(6, 9, 3, 3, blessed.box, {
-            label: 'Evolution Params',
-            padding: 2,
-            valign: 'middle',
-            content: "" + evolutionPrintable
-        })
-        screen.append(evolutionParamsBox);
-
-        screen.append(bestFitnessLog);
-        var i = 0
-        var bestLogInterval = setInterval(function () {
-            bestFitnessLog.log(
-                "{blue-fg}Generation:{/blue-fg} " + i + " " +
-                "{red-fg}Best Fitness:{/red-fg} " + bestFitnessOverGenerations[i] + "");
-            i++;
-            if (!bestFitnessOverGenerations[i]) {
-                clearInterval(bestLogInterval);
-            }
-        }, 100);
-
-        var j = 0
-        var meanLogInterval = setInterval(function () {
-            meanFitnessLog.log(
-                "{blue-fg}Generation:{/blue-fg} " + j + " " +
-                "{yellow-fg}Mean Fitness:{/yellow-fg} " + meanFitnessOverGenerations[j] + "");
-            j++;
-            if (!meanFitnessOverGenerations[j]) {
-                clearInterval(meanLogInterval);
-            }
-        }, 100);
 
         var meanFitnessData = {
             title: 'Mean Fitness',
@@ -90,14 +99,17 @@ module.exports = {
         screen.append(fitnessLine);
         fitnessLine.setData([meanFitnessData, bestFitnessData])
 
+        // Screen and Resize events definition
         screen.key(['escape', 'q', 'C-c'], function (ch, key) {
             return process.exit(0);
         });
 
         screen.on('resize', function () {
+            fitnessTable.emit('attach');
+            evolutionParamsBox.emit('attach');
+            fitnessPondBox.emit('attach');
+            bestSubjectBox.emit('attach');
             fitnessLine.emit('attach');
-            bestFitnessLog.emit('attach');
-            meanFitnessLog.emit('attach');
             fitnessLine.setData([meanFitnessData, bestFitnessData]);
         });
 
