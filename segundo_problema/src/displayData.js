@@ -8,13 +8,13 @@ var grid = new contrib.grid({ rows: 12, cols: 12, screen: screen })
 var energy = 0;
 
 var simulateBox = grid.set(6, 0, 6, 3, blessed.box, {
-    label: 'Simulation',
+    label: 'Simulation on Trained Map',
     align: 'center',
     valign: 'middle'
 });
 
 module.exports = {
-    initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubjectsOverGenerations, map) {
+    initialize: function (bestFitnessOverGenerations, meanFitnessOverGenerations, bestSubjectOverGenerations, evolutionParams) {
 
         var fitnessLine = grid.set(0, 0, 6, 12, contrib.line,
             {
@@ -39,27 +39,18 @@ module.exports = {
                 border: { type: "line", fg: "cyan" }
             });
 
-        printableMap = "";
-        for (var y = 0; y < map.length; y++) {
-            for (var x = 0; x < map[0].length; x++) {
-                if (map[y][x] == MAP.BLANK) {
-                    printableMap += "   ";
-                } else if (map[y][x] == MAP.END) {
-                    printableMap += " F ";
-                } else {
-                    printableMap += "[#]";
-                }
-            }
-            printableMap += "\n"
-        }
-
-        var mapBox = grid.set(6, 9, 6, 3, blessed.box, {
-            label: 'Training Map',
-            align: 'center',
+        evolutionPrintable = "" +
+            "Population Size:       " + evolutionParams.populationSize + "\n" +
+            "Limit of Robot Steps:  " + evolutionParams.limitOfRobotSteps + "\n" +
+            "Limit of Generations:  " + evolutionParams.limitOfGenerations + "\n" +
+            "Mutation Rate:         " + (evolutionParams.mutationRate * 100).toFixed(2) + " %\n";
+        var evolutionParamsBox = grid.set(6, 9, 3, 3, blessed.box, {
+            label: 'Evolution Params',
+            padding: 2,
             valign: 'middle',
-            content: "" + printableMap
+            content: "" + evolutionPrintable
         })
-        screen.append(mapBox);
+        screen.append(evolutionParamsBox);
 
         screen.append(bestFitnessLog);
         var i = 0
@@ -145,7 +136,7 @@ module.exports = {
             simulatedMap += "\n"
         }
 
-        simulateBox.setContent(simulatedMap + "Movement: " + energy++ + "\nPosition: " + JSON.stringify(position));
+        simulateBox.setContent(simulatedMap + "Movements: " + energy++ + "\nPosition: " + JSON.stringify(position));
         screen.render()
     }
 }

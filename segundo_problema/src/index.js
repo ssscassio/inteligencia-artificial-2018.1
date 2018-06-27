@@ -2,7 +2,7 @@
 var displayData = require('./displayData');
 
 // Genetic Algorithm Params
-const POPULATION_SIZE = 10;
+const POPULATION_SIZE = 200;
 const LIMIT_OF_ROBOT_STEPS = 100;
 const LIMIT_OF_GENERATIONS = 100;
 // MAP fields
@@ -277,7 +277,7 @@ function readSensors(map, robotPosition) {
     }
 }
 
-function createChildren(bestCandidates) {
+function createChildren(bestCandidates, generationIndex) {
     var candidatesShuffled = []
     var bestCandidatesChildren = [];
     function shuffle(array) {
@@ -303,7 +303,7 @@ function createChildren(bestCandidates) {
         var newRobot = {
             chromosome: breed(candidatesShuffled[pair].chromosome, candidatesShuffled[pair + 1].chromosome),
             fitness: null,
-            generation: null
+            generation: generationIndex
         }
         bestCandidatesChildren.push(newRobot);
     }
@@ -371,7 +371,6 @@ function main() {
 
         // Get the best robot (Subject)
         var bestSubject = Object.assign({}, actualGenerationSorted[0]);
-        console.log(bestSubject.fitness);
         bestSubjectsOverGenerations.push(bestSubject);
         bestFitnessOverGenerations.push(bestSubject.fitness);
         var meanFitness = fitnessMean([...actualGenerationSorted]);
@@ -380,19 +379,21 @@ function main() {
         //  3.2 Showing info about this generation
         console.log("Generation: ", generationIndex);
         console.log("Best Fitness: ", bestSubject.fitness, "; Best Subject: ");
-        console.log(getPhenotype(bestSubject.chromosome))
+        console.log("Best Subject Generation: ", bestSubject.generation);
+        console.log(getPhenotype(bestSubject.chromosome));
         console.log("Mean Fitness: ", fitnessMean(actualGenerationSorted));
 
         //  3.3 Creating the next Generation
         //      3.3.1 Crossover
         var best40Parents = [...actualGenerationSorted.slice(0, Math.floor(POPULATION_SIZE * 0.4))];
-        var new20Children = createChildren(best40Parents);
+        var new20Children = createChildren(best40Parents, generationIndex);
 
         //      3.3.2 Mutation
         //          3.3.1.1 Mutation over Crossover generated children
         var mutated20Children = [];
         new20Children.forEach((robot) => {
             var newRobot = mutateRobot(robot, MUTATE_RATE);
+            newRobot.generation = generationIndex;
             mutated20Children.push(newRobot);
         });
 
@@ -400,6 +401,7 @@ function main() {
         var mutated40Parents = [];
         best40Parents.forEach((robot) => {
             var newRobot = mutateRobot(robot, MUTATE_RATE * 2);
+            newRobot.generation = generationIndex;
             mutated40Parents.push(newRobot);
         });
 
@@ -412,15 +414,34 @@ function main() {
     }
     console.log("Map: ");
     console.log(map);
+    var evolutionParams = {
+        populationSize: POPULATION_SIZE,
+        limitOfRobotSteps: LIMIT_OF_ROBOT_STEPS,
+        limitOfGenerations: LIMIT_OF_GENERATIONS,
+        mutationRate: MUTATE_RATE
+    }
 
+    // Get the first Robot with the min fitness over generations
+    var minFitness = bestSubjectsOverGenerations[0].fitness;
+    var firstBestSubject = Object.assign({}, bestSubjectsOverGenerations[0]);
+    bestSubjectsOverGenerations.forEach(subject => {
+        if (subject.fitness < minFitness) {
+            minFitness = subject.fitness
+            firstBestSubject = Object.assign({}, subject);
+        }
+    });
+
+    // Display data
     displayData.initialize(
         bestFitnessOverGenerations,
         meanFitnessOverGenerations,
-        bestSubjectsOverGenerations,
-        map);
+        firstBestSubject,
+        evolutionParams
+    );
 
+    // Simulate the best robot over generations
     simulateBestRobot(
-        bestSubjectsOverGenerations[bestSubjectsOverGenerations.length - 1],
+        firstBestSubject,
         map,
         initialPosition,
         displayData.simulate
