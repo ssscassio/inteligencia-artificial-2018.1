@@ -139,7 +139,7 @@ function updateRobotFitness(robot, map, initialPosition, desirablePosition) {
     // Adaptation Function - Fitness - Ponderations
     fitness += energySpent * FITNESS_PONDERATIONS.ENERGY_SPENT;
     fitness += distance * FITNESS_PONDERATIONS.DISTANCE;
-    fitness -= reach ? FITNESS_PONDERATIONS.REACH : 0;
+    fitness += reach ? FITNESS_PONDERATIONS.REACH : 0;
     fitness += timesOnWall * FITNESS_PONDERATIONS.TIMES_ON_WALL;
     newRobot.fitness = fitness;
     return newRobot;
