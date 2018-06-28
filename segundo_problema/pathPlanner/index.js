@@ -57,7 +57,12 @@ function mutate(initialValue, mutationRange = 3, mutationRate = MUTATE_RATE) {
         return initialValue;
     }
 }
-
+/**
+ * Iterate over a robot's chromosome and create a new chromosome based on the mutationRate
+ * @param {Object} robot Object of a robot that must contain a a chromosome prop 
+ * @param {float} mutationRate Float value between 0 and 1 that will define if the mutation on a 
+ * chromosome's locus will happen or not 
+ */
 function mutateRobot(robot, mutationRate) {
     var newRobot = Object.assign({}, robot);
     var newChromosome = [];
@@ -93,15 +98,6 @@ function sortByFitness(generation) {
             : ((b.fitness > a.fitness) ? -1
                 : 0);
     });
-}
-
-/**
- * Get the best Subject of a generation
- * @param {Array} generation The generation
- * @return The best Subject of the generation
- */
-function bestFitnessSubject(generation) {
-    return sortByFitness(generation)[0];
 }
 
 function calculateFitness(generation, map, initialPosition, desirablePosition) {
