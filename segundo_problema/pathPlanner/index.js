@@ -12,7 +12,7 @@ const ROBOT_LOOK = { LEFT: 0, TOP: 1, RIGHT: 2, BOTTOM: 3 };
 const CHROMOSOME_SIZE = 64;
 
 // Genetic Algorithm Params
-const POPULATION_SIZE = 400;
+const POPULATION_SIZE = 100;
 const LIMIT_OF_ROBOT_STEPS = 100;
 const LIMIT_OF_GENERATIONS = 100;
 // Mutate Rate to each Locus on Chromosome
