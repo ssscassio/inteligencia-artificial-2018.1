@@ -6,22 +6,29 @@ VAR_INPUT				// Define input variables
 END_VAR
 
 VAR_OUTPUT				// Define output variable
-	in_hot : REAL;
-	in_cold : REAL;
+	out_hot : REAL;
+	out_cold : REAL;
 END_VAR
 
-FUZZIFY service			// Fuzzify input variable 'service': {'poor', 'good' , 'excellent'}
-	TERM poor := (0, 1) (4, 0) ; 
-	TERM good := (1, 0) (4,1) (6,1) (9,0);
-	TERM excellent := (6, 0) (9, 1);
+FUZZIFY diff_temp			// Fuzzify input variable 'diff_tempo': {'frio', 'quente' }
+	TERM frio := (1, 1) (25, 0) ; 
+	TERM quente := (15, 0) (60, 1) ;
 END_FUZZIFY
 
-FUZZIFY food			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
-	TERM rancid := (0, 1) (1, 1) (3,0) ;
-	TERM delicious := (7,0) (9,1);
+FUZZIFY diff_vazao			// Fuzzify input variable 'diff_vazao': { 'fraca', 'forte' }
+	TERM fraca := (0.001, 1) (0.05, 0) ;
+	TERM forte := (0.05, 0) (0.5, 1) ;
 END_FUZZIFY
 
-DEFUZZIFY tip			// Defzzzify output variable 'tip' : {'cheap', 'average', 'generous' }
+DEFUZZIFY out_hot			// Defuzzify output variable 'out_hot' : {'fraca', 'forte' }
+	TERM cheap := (0,0) (5,1) (10,0);
+	TERM average := (10,0) (15,1) (20,0);
+	TERM generous := (20,0) (25,1) (30,0);
+	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
+	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
+END_DEFUZZIFY
+
+DEFUZZIFY out_cold			// Defuzzify output variable 'out_cold' : {'fraca', 'forte' }
 	TERM cheap := (0,0) (5,1) (10,0);
 	TERM average := (10,0) (15,1) (20,0);
 	TERM generous := (20,0) (25,1) (30,0);
