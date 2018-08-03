@@ -32,20 +32,24 @@ public class CaldeiraoDoFuzzy {
 
         // Show 
         JFuzzyChart.get().chart(fis);
-//
-//        // Set inputs
-//        fis.setVariable("service", 3);
-//        fis.setVariable("food", 7);
-//
-//        // Evaluate
-//        fis.evaluate();
-//
-//        // Show output variable's chart
-//        Variable tip = fis.getVariable("tip");
-//        JFuzzyChart.get().chart(tip, tip.getDefuzzifier(), true);
-//
-//        // Print ruleSet
-//        System.out.println(fis);
+
+        // Set inputs
+        fis.setVariable("diff_temp", -10);
+        fis.setVariable("diff_vazao", 0.1);
+
+        // Evaluate
+        fis.evaluate();
+
+        // Show output variable's chart
+        Variable out_hot = fis.getVariable("out_hot");
+        JFuzzyChart.get().chart(out_hot, out_hot.getDefuzzifier(), true);
+        
+        Variable out_cold = fis.getVariable("out_hot");
+        JFuzzyChart.get().chart(out_cold, out_cold.getDefuzzifier(), true);
+
+        // Print ruleSet
+        System.out.println(out_hot);
+        System.out.println(out_cold);
      
 //        Caldeira c = new Caldeira(1, 30);
 //        for(int i = 0 ; i <= 2 ; i ++){

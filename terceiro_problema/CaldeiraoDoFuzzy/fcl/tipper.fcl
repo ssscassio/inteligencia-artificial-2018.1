@@ -20,30 +20,32 @@ FUZZIFY diff_vazao			// Fuzzify input variable 'diff_vazao': { 'fraca', 'forte' 
 	TERM forte := (0.05, 0) (0.5, 1) ;
 END_FUZZIFY
 
-DEFUZZIFY out_hot			// Defuzzify output variable 'out_hot' : {'fraca', 'forte' }
-	TERM cheap := (0,0) (5,1) (10,0);
-	TERM average := (10,0) (15,1) (20,0);
-	TERM generous := (20,0) (25,1) (30,0);
+DEFUZZIFY out_hot			// Defuzzify output variable 'out_hot' : {'fraca', 'media', 'forte' }
+	TERM fraca := (0,1) (0.25, 0);
+	TERM media := (0.05, 0) (0.2, 1) (0.5, 1) (0.65, 0);
+	TERM forte := (0.4, 0) (1, 1);
 	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
 	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
-DEFUZZIFY out_cold			// Defuzzify output variable 'out_cold' : {'fraca', 'forte' }
-	TERM cheap := (0,0) (5,1) (10,0);
-	TERM average := (10,0) (15,1) (20,0);
-	TERM generous := (20,0) (25,1) (30,0);
+DEFUZZIFY out_cold			// Defuzzify output variable 'out_hot' : {'fraca', 'media', 'forte' }
+	TERM fraca := (0,1) (0.25, 0);
+	TERM media := (0.05, 0) (0.2, 1) (0.5, 1) (0.65, 0);
+	TERM forte := (0.4, 0) (1, 1);
 	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
 	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
 RULEBLOCK No1
-	AND : MIN;			// Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
 	ACT : MIN;			// Use 'min' activation method
 	ACCU : MAX;			// Use 'max' accumulation method
 
-	RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
-	RULE 2 : IF service IS good THEN tip IS average; 
-	RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
+	RULE 1 : IF diff_vazao IS forte THEN out_hot IS fraca;
+	RULE 2 : IF diff_vazao IS forte THEN out_cold IS fraca;
+	RULE 3 : IF diff_temp IS frio THEN out_hot IS forte;
+	RULE 4 : IF diff_temp IS frio THEN out_cold IS fraca;
+	RULE 5 : IF diff_temp IS quente THEN out_cold IS forte;
+	RULE 6 : IF diff_temp IS quente THEN out_hot IS fraca;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK
