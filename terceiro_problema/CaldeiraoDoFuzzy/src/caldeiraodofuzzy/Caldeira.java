@@ -14,7 +14,7 @@ public class Caldeira {
     public final static double VQMAX = 1; // VAZAO MAXIMA DE AGUA QUENTE EM M CUBICO
     public final static double VFMAX = 1; // VAZAO MAXIMA DE AGUA FRIO EM M CUBICO
     public final static double XMAX = 20; // ALTURA MAXIMA DO TANQUE
-    public final static double RAIO = 1; // RAIO DO TANQUE
+    public final static double RAIO = 2; // RAIO DO TANQUE
     public final static double TF = 5; // TEMPERATURA DA AGUA FRIA NA ENTRADA
     public final static double TQ = 60; // TEMPERATURA DA AGUA QUENTE NA ENTRADA
     public final static double VD = 1; // VAZÃO DESEJADA NA SAIDA DO TANQUE
@@ -49,21 +49,33 @@ public class Caldeira {
     public void simular(double vq, double vf){
         this.a_tanque_anterior = this.a_tanque;
         this.t_tanque_anterior = this.t_tanque;
-        t_tanque = this.novaTemperatura(vq, vf);
-        a_tanque = this.altura(vq, vf, this.vazao());
+        this.t_tanque = this.novaTemperatura(vq, vf);
+        this.a_tanque = this.altura(vq, vf, this.vazao(this.a_tanque_anterior));
     }
     
     public double getAltura(){
         return this.a_tanque;
     }
     
-    public double vazao(){
-        return (0.002)*sqrt(2*GRAVIDADE*a_tanque_anterior);
+    public double getTemperatura(){
+        return this.t_tanque;
     }
     
-    private double novaTemperatura(double vq, double vf){
-        return (vq*TQ + vf*TF + a_tanque*t_tanque)/(vq + vf + a_tanque);
+    public double getDiffTemperatura(){
+        return this.t_tanque - TD;
     }
+    
+    public double getDiffVazao() {
+        return this.vazao(this.a_tanque) - VD; 
+    }
+    public double vazao(double altura){
+        return (0.07142)*sqrt(2*GRAVIDADE*altura);
+    }
+    
+    
+    //public double novaTemperatura(double vq, double vf){
+    //    return (vq*TQ + vf*TF + a_tanque*t_tanque)/(vq + vf + a_tanque);
+    //}
     
     /**
      * 
@@ -77,8 +89,8 @@ public class Caldeira {
     }
     
     //Calcula a diferença entre a temperatura desejada e a que está saindo do tanque
-    public double diff_temperatura(){
-        return ( (t_tanque_anterior * a_tanque_anterior * PI*RAIO*RAIO) + (TQ * VQMAX * DELTA_T) + (TF * VFMAX * DELTA_T))/( (a_tanque_anterior * PI * RAIO * RAIO ) + (VQMAX * DELTA_T ) + (VFMAX * DELTA_T));
+    public double novaTemperatura(double vq, double vf){
+        return ((t_tanque_anterior * a_tanque_anterior * PI*RAIO*RAIO) + (TQ * vq * DELTA_T) + (TF * vf * DELTA_T))/( (a_tanque_anterior * PI * RAIO * RAIO ) + (vq * DELTA_T ) + (vf * DELTA_T));
     }
     
 }

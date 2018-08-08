@@ -11,13 +11,13 @@ VAR_OUTPUT				// Define output variable
 END_VAR
 
 FUZZIFY diff_temp			// Fuzzify input variable 'diff_tempo': {'frio', 'quente' }
-	TERM frio := (1, 1) (25, 0) ; 
-	TERM quente := (15, 0) (60, 1) ;
+	TERM frio := (-55, 1) (0, 0) ; 
+	TERM quente := (0, 0) (55, 1) ;
 END_FUZZIFY
 
 FUZZIFY diff_vazao			// Fuzzify input variable 'diff_vazao': { 'fraca', 'forte' }
-	TERM fraca := (0.001, 1) (0.05, 0) ;
-	TERM forte := (0.05, 0) (0.5, 1) ;
+	TERM abaixo := (-1, 1) (0.0, 0) ;
+	TERM acima := (0.0, 0) (1, 1) ;
 END_FUZZIFY
 
 DEFUZZIFY out_hot			// Defuzzify output variable 'out_hot' : {'fraca', 'media', 'forte' }
@@ -40,12 +40,14 @@ RULEBLOCK No1
 	ACT : MIN;			// Use 'min' activation method
 	ACCU : MAX;			// Use 'max' accumulation method
 
-	RULE 1 : IF diff_vazao IS forte THEN out_hot IS fraca;
-	RULE 2 : IF diff_vazao IS forte THEN out_cold IS fraca;
+	RULE 1 : IF diff_vazao IS acima THEN out_hot IS fraca;
+	RULE 2 : IF diff_vazao IS acima THEN out_cold IS fraca;
 	RULE 3 : IF diff_temp IS frio THEN out_hot IS forte;
 	RULE 4 : IF diff_temp IS frio THEN out_cold IS fraca;
 	RULE 5 : IF diff_temp IS quente THEN out_cold IS forte;
 	RULE 6 : IF diff_temp IS quente THEN out_hot IS fraca;
+	RULE 7 : IF diff_vazao IS abaixo THEN out_hot IS forte;
+	RULE 8 : IF diff_vazao IS abaixo THEN out_cold IS forte;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK

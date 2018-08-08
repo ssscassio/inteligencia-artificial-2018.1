@@ -31,33 +31,36 @@ public class CaldeiraoDoFuzzy {
         }
 
         // Show 
-        JFuzzyChart.get().chart(fis);
+//        JFuzzyChart.get().chart(fis);
 
-        // Set inputs
-        fis.setVariable("diff_temp", -10);
-        fis.setVariable("diff_vazao", 0.1);
-
-        // Evaluate
-        fis.evaluate();
+        Caldeira c = new Caldeira(9, 30);
+        for(int i = 0 ; i <= 50 ; i ++){
+            // Set inputs
+            fis.setVariable("diff_temp", c.getDiffTemperatura());
+            fis.setVariable("diff_vazao", c.getDiffVazao());
+             // Evaluate
+            fis.evaluate();
+    
+            System.out.println("\n\nSimulação: " + i);
+            System.out.println("DIFF TEMPERATURA = " + c.getDiffTemperatura());
+            System.out.println("DIFF VAZÃO = " + c.getDiffVazao());
+            Variable out_hot = fis.getVariable("out_hot");
+            Variable out_cold = fis.getVariable("out_cold");
+            System.out.println("Vazão atual:" + c.vazao(c.getAltura()));
+            
+            System.out.println("Out Hot: " + out_hot.getValue());
+            System.out.println("Out Cold: " + out_cold.getValue());
+            System.out.println("Altura atual: " + c.getAltura());
+            
+            c.simular(out_hot.getValue(), out_cold.getValue());
+//            sleep(100);
+        }
 
         // Show output variable's chart
-        Variable out_hot = fis.getVariable("out_hot");
-        JFuzzyChart.get().chart(out_hot, out_hot.getDefuzzifier(), true);
+//        JFuzzyChart.get().chart(out_hot, out_hot.getDefuzzifier(), true);
         
-        Variable out_cold = fis.getVariable("out_hot");
-        JFuzzyChart.get().chart(out_cold, out_cold.getDefuzzifier(), true);
+//        JFuzzyChart.get().chart(out_cold, out_cold.getDefuzzifier(), true);
 
-        // Print ruleSet
-        System.out.println(out_hot);
-        System.out.println(out_cold);
-     
-//        Caldeira c = new Caldeira(1, 30);
-//        for(int i = 0 ; i <= 2 ; i ++){
-//            c.simular(0, 1);
-//            System.out.println("DIFF TEMPERATURA = " + c.diff_temperatura());
-//            System.out.println("VAZÃO = " + c.vazao());
-//            sleep(1000);
-//        }
 
     }
     
