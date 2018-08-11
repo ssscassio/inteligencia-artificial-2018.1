@@ -11,38 +11,38 @@ VAR_OUTPUT              // Define output variable
 END_VAR
 
 FUZZIFY diff_temp       // Fuzzify input variable 'diff_tempo': {'muito_frio', 'frio', 'normal', 'quente', 'muito_quente' }
-    TERM muito_frio := (-55, 1) (-42, 1) (-30, 0);
-    TERM frio := (-42, 0) (-30, 1) (-18, 1) (-6, 0); 
-    TERM normal := (-18, 0) (-6, 1) (6, 1) (18, 0);
-    TERM quente := (6, 0) (18, 1) (30, 1) (42, 0);
-    TERM muito_quente := (30, 0) (42, 1) (55, 1);
+    TERM muito_frio := (-55, 1) (-33, 0);
+    TERM frio := (-33, 0) (-22, 1) (-11, 0); 
+    TERM normal := (-11, 0) (0.0, 1) (11, 0);
+    TERM quente := (11, 0) (22, 1) (33, 0);
+    TERM muito_quente := (33, 0) (55, 1);
 END_FUZZIFY
 
 FUZZIFY diff_vazao      // Fuzzify input variable 'diff_vazao': { 'muito_abaixo', 'abaixo','normal', 'acima', 'muito_acima' }
-    TERM muito_abaixo := (-1, 1) (-0.8, 1) (-0.6, 0);
-    TERM abaixo := (-0.8, 0) (-0.6, 1) (-0.4, 1) (-0.2, 0); 
-    TERM normal := (-0.4, 0) (-0.2, 1) (0.2, 1) (0.4, 0);
-    TERM acima := (0.2, 0) (0.4, 1) (0.6, 1) (0.8, 0);
-    TERM muito_acima := (0.6, 0) (0.8, 1) (1, 1);
+    TERM muito_abaixo := (-1, 1) (-0.6, 0);
+    TERM abaixo := (-0.6, 0) (-0.4, 1) (-0.2, 0);
+    TERM normal := (-0.2, 0) (0.0, 1) (0.2, 0);
+    TERM acima := (0.2, 0) (0.4, 1) (0.6, 0.0);
+    TERM muito_acima := (0.6, 0) (1, 1);
 END_FUZZIFY
 
 DEFUZZIFY out_hot       // Defuzzify output variable 'out_hot' : {'muito_fraca', 'fraca' 'media', 'forte', 'muito_forte' }
-    TERM muito_fraca := (0, 1) (0.15, 1) (0.25, 0);
-    TERM fraca := (0.15, 0) (0.25, 1) (0.35, 1) (0.45, 0);
-    TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
-    TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
-    TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
-    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    TERM muito_fraca := (0, 1) (0.2, 0);
+    TERM fraca := (0.2, 0) (0.3, 1) (0.4, 0);
+    TERM normal := (0.4, 0) (0.5, 1) (0.6, 0);
+    TERM forte := (0.6, 0) (0.7, 1) (0.8, 0);
+    TERM muito_forte := (0.8, 0) (1, 1);
+    METHOD : COA;       // Use 'Center Of Gravity' defuzzification method
     DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
 DEFUZZIFY out_cold      // Defuzzify output variable 'out_cold' : {'muito_fraca', 'fraca' 'media', 'forte', 'muito_forte' }
-    TERM muito_fraca := (0, 1) (0.15, 1) (0.25, 0);
-    TERM fraca := (0.15, 0) (0.25, 1) (0.35, 1) (0.45, 0);
-    TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
-    TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
-    TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
-    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    TERM muito_fraca := (0, 1) (0.2, 0);
+    TERM fraca := (0.2, 0) (0.3, 1) (0.4, 0);
+    TERM normal := (0.4, 0) (0.5, 1) (0.6, 0);
+    TERM forte := (0.6, 0) (0.7, 1) (0.8, 0);
+    TERM muito_forte := (0.8, 0) (1, 1);
+    METHOD : COA;       // Use 'Center Of Gravity' defuzzification method
     DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 

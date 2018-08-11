@@ -32,7 +32,7 @@ DEFUZZIFY out_hot       // Defuzzify output variable 'out_hot' : {'muito_fraca',
     TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
     TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
     TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
-    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    METHOD : LM;        // Use 'Left Most Max' defuzzification method
     DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
@@ -42,7 +42,7 @@ DEFUZZIFY out_cold      // Defuzzify output variable 'out_cold' : {'muito_fraca'
     TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
     TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
     TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
-    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    METHOD : LM;        // Use 'Left Most Max' defuzzification method
     DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
 END_DEFUZZIFY
 
