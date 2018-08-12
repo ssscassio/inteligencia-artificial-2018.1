@@ -5,6 +5,9 @@
  */
 package caldeiraodofuzzy;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import static java.lang.Thread.sleep;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.plot.JFuzzyChart;
@@ -19,9 +22,9 @@ public class CaldeiraoDoFuzzy {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
          // Load from 'FCL' file
-        String fileName = "fcl/tipper.fcl";
+        String fileName = "fcl/tipper-rules-change.fcl";
         FIS fis = FIS.load(fileName,true);
 
         // Error while loading?
@@ -33,8 +36,11 @@ public class CaldeiraoDoFuzzy {
         // Show 
 //        JFuzzyChart.get().chart(fis);
 
-        Caldeira c = new Caldeira(9, 30);
-        for(int i = 0 ; i <= 50 ; i ++){
+        FileWriter arq = new FileWriter("10 30 1 40-rules-change.csv");
+        PrintWriter gravar = new PrintWriter(arq);
+        gravar.printf("diff_temp, diff_vazao, out_hot, out_cold\n");
+        Caldeira c = new Caldeira(10, 30);
+        for(int i = 0 ; i <= 1000 ; i ++){
             // Set inputs
             fis.setVariable("diff_temp", c.getDiffTemperatura());
             fis.setVariable("diff_vazao", c.getDiffVazao());
@@ -51,10 +57,13 @@ public class CaldeiraoDoFuzzy {
             System.out.println("Out Hot: " + out_hot.getValue());
             System.out.println("Out Cold: " + out_cold.getValue());
             System.out.println("Altura atual: " + c.getAltura());
+            gravar.printf(c.getDiffTemperatura()+","+c.getDiffVazao()+","+out_hot.getValue()+","+out_cold.getValue()+"\n");
+            
             
             c.simular(out_hot.getValue(), out_cold.getValue());
 //            sleep(100);
         }
+        gravar.close();
 
         // Show output variable's chart
 //        JFuzzyChart.get().chart(out_hot, out_hot.getDefuzzifier(), true);

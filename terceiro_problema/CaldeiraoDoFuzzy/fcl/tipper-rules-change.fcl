@@ -50,35 +50,35 @@ RULEBLOCK No1
     ACT : MIN;          // Use 'min' activation method
     ACCU : MAX;         // Use 'max' accumulation method
 
-    RULE 1 : IF diff_vazao IS muito_acima and diff_temp IS muito_frio THEN out_hot IS normal, out_cold IS muito_fraca;
+    RULE 1 : IF diff_vazao IS muito_acima and diff_temp IS muito_frio THEN out_hot IS normal;
     RULE 2 : IF diff_vazao IS muito_acima and diff_temp IS frio THEN out_hot IS fraca, out_cold IS muito_fraca;
     RULE 3 : IF diff_vazao IS muito_acima and diff_temp IS normal THEN out_hot IS muito_fraca, out_cold IS muito_fraca;
     RULE 4 : IF diff_vazao IS muito_acima and diff_temp IS quente THEN out_cold IS fraca, out_hot IS muito_fraca;
-    RULE 5 : IF diff_vazao IS muito_acima and diff_temp IS muito_quente THEN out_cold IS normal, out_hot IS muito_fraca;
+    RULE 5 : IF diff_vazao IS muito_acima and diff_temp IS muito_quente THEN out_cold IS normal;
 
-    RULE 6 : IF diff_vazao IS acima and diff_temp IS muito_frio THEN out_hot IS forte, out_cold IS muito_fraca;
+    RULE 6 : IF diff_vazao IS acima and diff_temp IS muito_frio THEN out_hot IS forte;
     RULE 7 : IF diff_vazao IS acima and diff_temp IS frio THEN out_hot IS normal, out_cold IS muito_fraca;
     RULE 8 : IF diff_vazao IS acima and diff_temp IS normal THEN out_cold IS fraca, out_hot IS fraca;
     RULE 9 : IF diff_vazao IS acima and diff_temp IS quente THEN out_cold IS normal, out_hot IS muito_fraca;
-    RULE 10 : IF diff_vazao IS acima and diff_temp IS muito_quente THEN out_cold IS forte, out_hot IS muito_fraca;
+    RULE 10 : IF diff_vazao IS acima and diff_temp IS muito_quente THEN out_cold IS forte;
 
-    RULE 11 : IF diff_vazao IS normal and diff_temp IS muito_frio THEN out_hot IS forte, out_cold IS fraca;
+    RULE 11 : IF diff_vazao IS normal and diff_temp IS muito_frio THEN out_hot IS forte;
     RULE 12 : IF diff_vazao IS normal and diff_temp IS frio THEN out_hot IS normal, out_cold IS fraca; 
     RULE 13 : IF diff_vazao IS normal and diff_temp IS normal THEN out_cold IS normal, out_hot IS normal;
     RULE 14 : IF diff_vazao IS normal and diff_temp IS quente THEN out_cold IS normal, out_hot IS fraca;
-    RULE 15 : IF diff_vazao IS normal and diff_temp IS muito_quente THEN out_cold IS forte, out_hot IS fraca;
+    RULE 15 : IF diff_vazao IS normal and diff_temp IS muito_quente THEN out_cold IS forte;
 
-    RULE 16 : IF diff_vazao IS abaixo and diff_temp IS muito_frio THEN out_hot IS muito_forte, out_cold IS fraca;
+    RULE 16 : IF diff_vazao IS abaixo and diff_temp IS muito_frio THEN out_hot IS muito_forte;
     RULE 17 : IF diff_vazao IS abaixo and diff_temp IS frio THEN out_hot IS muito_forte, out_cold IS normal;
     RULE 18 : IF diff_vazao IS abaixo and diff_temp IS normal THEN out_cold IS forte, out_hot IS forte;
     RULE 19 : IF diff_vazao IS abaixo and diff_temp IS quente THEN out_cold IS muito_forte, out_hot IS normal;
-    RULE 20 : IF diff_vazao IS abaixo and diff_temp IS muito_quente THEN out_cold IS muito_forte, out_hot IS fraca;
+    RULE 20 : IF diff_vazao IS abaixo and diff_temp IS muito_quente THEN out_cold IS muito_forte;
 
-    RULE 21 : IF diff_vazao IS muito_abaixo and diff_temp IS muito_frio THEN out_hot IS muito_forte, out_cold IS normal;
+    RULE 21 : IF diff_vazao IS muito_abaixo and diff_temp IS muito_frio THEN out_hot IS muito_forte;
     RULE 22 : IF diff_vazao IS muito_abaixo and diff_temp IS frio THEN out_hot IS muito_forte, out_cold IS forte;
     RULE 23 : IF diff_vazao IS muito_abaixo and diff_temp IS normal THEN out_cold IS muito_forte, out_hot IS muito_forte;
     RULE 24 : IF diff_vazao IS muito_abaixo and diff_temp IS quente THEN out_cold IS muito_forte, out_hot IS forte;
-    RULE 25 : IF diff_vazao IS muito_abaixo and diff_temp IS muito_quente THEN out_cold IS muito_forte, out_hot IS normal;
+    RULE 25 : IF diff_vazao IS muito_abaixo and diff_temp IS muito_quente THEN out_cold IS muito_forte;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK
