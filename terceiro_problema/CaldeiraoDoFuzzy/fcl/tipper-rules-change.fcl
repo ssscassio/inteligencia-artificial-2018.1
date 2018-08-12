@@ -20,9 +20,9 @@ END_FUZZIFY
 
 FUZZIFY diff_vazao      // Fuzzify input variable 'diff_vazao': { 'muito_abaixo', 'abaixo','normal', 'acima', 'muito_acima' }
     TERM muito_abaixo := (-1, 1) (-0.8, 1) (-0.6, 0);
-    TERM abaixo := (-0.8, 0) (-0.6, 1) (-0.35, 1) (-0.15, 0); 
-    TERM normal := (-0.35, 0) (-0.1, 1) (0.1, 1) (0.35, 0);
-    TERM acima := (0.15, 0) (0.35, 1) (0.6, 1) (0.8, 0);
+    TERM abaixo := (-0.8, 0) (-0.6, 1) (-0.4, 1) (-0.2, 0); 
+    TERM normal := (-0.4, 0) (-0.2, 1) (0.2, 1) (0.4, 0);
+    TERM acima := (0.2, 0) (0.4, 1) (0.6, 1) (0.8, 0);
     TERM muito_acima := (0.6, 0) (0.8, 1) (1, 1);
 END_FUZZIFY
 
