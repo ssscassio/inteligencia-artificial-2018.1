@@ -19,11 +19,11 @@ FUZZIFY diff_temp       // Fuzzify input variable 'diff_tempo': {'muito_frio', '
 END_FUZZIFY
 
 FUZZIFY diff_vazao      // Fuzzify input variable 'diff_vazao': { 'muito_abaixo', 'abaixo','normal', 'acima', 'muito_acima' }
-    TERM muito_abaixo := (-1, 1) (-0.8, 1) (-0.6, 0);
-    TERM abaixo := (-0.8, 0) (-0.6, 1) (-0.35, 1) (-0.15, 0); 
-    TERM normal := (-0.35, 0) (-0.1, 1) (0.1, 1) (0.35, 0);
-    TERM acima := (0.15, 0) (0.35, 1) (0.6, 1) (0.8, 0);
-    TERM muito_acima := (0.6, 0) (0.8, 1) (1, 1);
+    TERM muito_abaixo := (-2, 1) (-1.6, 1) (-1.2, 0);
+    TERM abaixo := (-1.6, 0) (-1.2, 1) (-0.7, 1) (-0.3, 0); 
+    TERM normal := (-0.7, 0) (-0.2, 1) (0.2, 1) (0.7, 0);
+    TERM acima := (0.3, 0) (0.7, 1) (1.2, 1) (1.6, 0);
+    TERM muito_acima := (1.2, 0) (1.6, 1) (2, 1);
 END_FUZZIFY
 
 DEFUZZIFY out_hot       // Defuzzify output variable 'out_hot' : {'muito_fraca', 'fraca' 'media', 'forte', 'muito_forte' }
