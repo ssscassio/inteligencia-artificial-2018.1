@@ -1,0 +1,68 @@
+FUNCTION_BLOCK caldeira	// Block definition (there may be more than one block per file)
+
+VAR_INPUT               // Define input variables
+    diff_vazao : REAL;
+    diff_temp : REAL;
+END_VAR
+
+VAR_OUTPUT              // Define output variable
+    out_hot : REAL;
+    out_cold : REAL;
+END_VAR
+
+FUZZIFY diff_temp       // Fuzzify input variable 'diff_temp': {'muito_frio', 'frio', 'normal', 'quente', 'muito_quente' }
+    TERM muito_frio := (-55, 1) (-42, 1) (-30, 0);
+    TERM frio := (-42, 0) (-30, 1) (-18, 1) (-6, 0); 
+    TERM normal := (-18, 0) (-6, 1) (6, 1) (18, 0);
+    TERM quente := (6, 0) (18, 1) (30, 1) (42, 0);
+    TERM muito_quente := (30, 0) (42, 1) (55, 1);
+END_FUZZIFY
+
+FUZZIFY diff_vazao      // Fuzzify input variable 'diff_vazao': { 'muito_abaixo', 'abaixo','normal', 'acima', 'muito_acima' }
+    TERM muito_abaixo := (-2, 1) (-1.6, 1) (-1.2, 0);
+    TERM abaixo := (-1.6, 0) (-1.2, 1) (-0.7, 1) (-0.3, 0); 
+    TERM normal := (-0.7, 0) (-0.2, 1) (0.2, 1) (0.7, 0);
+    TERM acima := (0.3, 0) (0.7, 1) (1.2, 1) (1.6, 0);
+    TERM muito_acima := (1.2, 0) (1.6, 1) (2, 1);
+END_FUZZIFY
+
+DEFUZZIFY out_hot       // Defuzzify output variable 'out_hot' : {'muito_fraca', 'fraca' 'media', 'forte', 'muito_forte' }
+    TERM muito_fraca := (0, 1) (0.15, 1) (0.25, 0);
+    TERM fraca := (0.15, 0) (0.25, 1) (0.35, 1) (0.45, 0);
+    TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
+    TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
+    TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
+    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
+END_DEFUZZIFY
+
+DEFUZZIFY out_cold      // Defuzzify output variable 'out_cold' : {'muito_fraca', 'fraca' 'media', 'forte', 'muito_forte' }
+    TERM muito_fraca := (0, 1) (0.15, 1) (0.25, 0);
+    TERM fraca := (0.15, 0) (0.25, 1) (0.35, 1) (0.45, 0);
+    TERM normal := (0.35, 0) (0.45, 1) (0.55, 1) (0.65, 0);
+    TERM forte := (0.55, 0) (0.65, 1) (0.75, 1) (0.85, 0);
+    TERM muito_forte := (0.75, 0) (0.85, 1) (1, 1);
+    METHOD : COG;       // Use 'Center Of Gravity' defuzzification method
+    DEFAULT := 0;       // Default value is 0 (if no rule activates defuzzifier)
+END_DEFUZZIFY
+
+RULEBLOCK No1
+    ACT : MIN;          // Use 'min' activation method
+    ACCU : MAX;         // Use 'max' accumulation method
+
+    RULE 1 : IF diff_vazao IS muito_acima THEN out_hot IS muito_fraca, out_cold IS muito_fraca;
+    RULE 2 : IF diff_vazao IS acima THEN out_hot IS fraca, out_cold IS fraca;
+    RULE 3 : IF diff_vazao IS normal THEN out_hot IS normal, out_cold IS normal;
+    RULE 4 : IF diff_vazao IS abaixo THEN out_hot IS forte, out_cold IS forte;
+    RULE 5 : IF diff_vazao IS muito_abaixo THEN out_hot IS muito_forte, out_cold IS muito_forte;
+
+    RULE 6 : IF diff_temp IS muito_frio THEN out_hot IS muito_forte, out_cold IS muito_fraca;
+    RULE 7 : IF diff_temp IS frio THEN out_hot IS forte, out_cold IS fraca; 
+    RULE 8 : IF diff_temp IS normal THEN out_cold IS normal, out_hot IS normal;
+    RULE 9 : IF diff_temp IS quente THEN out_cold IS forte, out_hot IS fraca;
+    RULE 10 : IF diff_temp IS muito_quente THEN out_cold IS muito_forte, out_hot IS muito_fraca;
+    
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
+
