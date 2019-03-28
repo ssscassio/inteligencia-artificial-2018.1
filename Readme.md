@@ -16,3 +16,6 @@ Trabalhos desenvolvidos durante a disciplina [Inteligência Artificial Não Simb
 
 ### [Problema 2](./segundo_problema)
 - O propósito desse projeto é cobrir os conceitos que envolvem Computação Evolutiva e algoritmos genéticos.
+
+### [Problema 3](./terceiro_problema)
+- O propósito desse projeto é cobrir os conceitos que envolvem Sistemas Fuzzy (Sistemas nebulosos)
